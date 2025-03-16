@@ -49,10 +49,10 @@ const userScehma = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref : 'Address'
   },
-  orderHistory : {
+  orderHistory : [{
     type : mongoose.Schema.Types.ObjectId ,
     ref : 'Order'
-  },
+  }]
 },{
   timestamps : true
 })

@@ -5,9 +5,7 @@ dotenv.config()
 
 const auth = async (req , res, next) => {
   try {
-    const token = req.cookies.refreshToken
-    console.log(token)
-    //console.log(token)
+    const token = req.cookies.accessToken
     if(!token) {
       return res.status(400).send("Please provide token")
     }
@@ -18,7 +16,7 @@ const auth = async (req , res, next) => {
     if(!decode) {
       return res.status(400).json({ message : "unauthorized access"})
     }
-    
+
     req.userId = decode.userId; 
     next()
 
@@ -33,3 +31,6 @@ const auth = async (req , res, next) => {
 module.exports = {
   auth
 }
+
+
+//https://monetoad.com/woqL4W4PB0

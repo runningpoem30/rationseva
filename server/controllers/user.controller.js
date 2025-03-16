@@ -188,9 +188,7 @@ const updateAvatar = async (req, res) => {
   try {
     
     console.log(req.userId)
-    console.log("Request File:", req.file); // Debugging log
-    console.log("Request Body:", req.body); // Debugging log
-
+  
     const userId = req.userId;
     const image = req.file;
     console.log(image)

@@ -14,7 +14,7 @@ cloudinary.config({
 
 
 const uploadToCloudinary = (fileBuffer) => {
-  return new Promise((resolve, reject) => {l
+  return new Promise((resolve, reject) => {
     console.log("Starting Cloudinary upload..."); // Debugging log
     const uploadStream = cloudinary.uploader.upload_stream(
       { resource_type: "auto" },

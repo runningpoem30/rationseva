@@ -10,7 +10,7 @@ const auth = async (req , res, next) => {
       return res.status(400).send("Please provide token")
     }
 
-    const decode = await jwt.verify(token , process.env.REFRESH_TOKEN_KEY);
+    const decode = await jwt.verify(token , process.env.ACCESS_TOKEN_KEY);
     //console.log(decode)
 
     if(!decode) {
@@ -26,10 +26,34 @@ const auth = async (req , res, next) => {
   }
 }
 
+const vendorAuth = async(req, res , next) => {
+  try{
+    const token = req.cookies.accessToken
+    console.log(token)
+    if(!token){
+      return res.status(400).json({message : "Please provide token"})
+    }
+
+    const decode = await jwt.verify(token , process.env.ACCESS_TOKEN_KEY)
+    console.log(decode)
+
+    if(!decode){
+      return res.status(400).json({message : "unauthorized access"})
+    }
+
+    req.vendorId = decode.vendorId
+    next()
+
+  }
+  catch(error)  {
+    res.status(401).json({message : "unauthorized access" , error : error})
+  }
+}
 
 
 module.exports = {
-  auth
+  auth,
+  vendorAuth
 }
 
 

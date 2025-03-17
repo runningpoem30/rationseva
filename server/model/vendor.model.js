@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const validaotr = require("validator")
+const validator = require("validator")
 const vendorSchema = new mongoose.Schema({
   shopName :{
     minLength : 4,
@@ -41,9 +41,11 @@ const vendorSchema = new mongoose.Schema({
   address : {
     type : mongoose.Schema.Types.ObjectId ,
     ref : 'Address',
-    required : true
   },
-
+  verify_email : {
+    type : Boolean ,
+    default : false
+  }
 })
 
 

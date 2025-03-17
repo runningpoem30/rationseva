@@ -4,6 +4,7 @@ const { databaseConnect } = require("./util/database")
 const PORT = 8000
 const app = express()
 const userRoutes = require('./routes/user.routes')
+const vendorRoutes = require('./routes/vendor.routes')
 const cookieParser = require('cookie-parser')
 require("dotenv").config()
 
@@ -14,6 +15,7 @@ app.use(cookieParser())
 
 
 app.use('/api/user' , userRoutes)
+app.use('/api/vendor' , vendorRoutes)
 
 
 

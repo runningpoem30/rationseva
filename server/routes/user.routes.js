@@ -1,5 +1,6 @@
 const express  = require("express");
 const Router = require('router')
+
 const { 
     signupUser 
   , loginUser 
@@ -10,6 +11,7 @@ const {
   , refreshToken
 } =  require('../controllers/user.controller')
 const { auth } = require('../middleware/auth.middleware')
+const { authRefresh } = require('../middleware/refreshToken.middleware')
 const { upload } = require("../middleware/file.middleware")
 const userRouter = Router()
 
@@ -19,7 +21,7 @@ userRouter.post('/logout' , auth ,  logoutUser)
 userRouter.get('/verify/:id/:token' , verifyUser)
 userRouter.put('/update-user' , auth , updateUser)
 userRouter.put('/update-avatar' , auth , upload.single("avatar"), updateAvatar)
-userRouter.post('/refresh-token' , auth , refreshToken)
+userRouter.post('/refresh-token' , authRefresh , refreshToken)
 
 
 

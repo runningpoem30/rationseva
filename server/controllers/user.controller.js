@@ -66,20 +66,20 @@ const loginUser = async (req , res ) => {
     const checkPassword = await bcrypt.compare(password , findUser.password);
 
     if(!checkPassword){
-      return res.status(400).json({message : "Wrong password"})
+      return res.status(400).json({message : "Invalid Credentials"})
     }
 
-    const accessToken = jwt.sign({ userId : findUser._id} , process.env.ACCESS_TOKEN_KEY , {expiresIn : '1h'})
+    const accessToken = jwt.sign({ userId : findUser._id} , process.env.ACCESS_TOKEN_KEY , {expiresIn : '10m'})
 
-    const refreshToken = jwt.sign({ userId : findUser._id} , process.env.REFRESH_TOKEN_KEY , {expiresIn : '1m'})
+    const refreshToken = jwt.sign({ userId : findUser._id} , process.env.REFRESH_TOKEN_KEY , {expiresIn : '7d'})
 
     const cookieOption  = {
       httpOnly : true , 
       secure : true ,
-      sameSite : "Lax"
+      sameSite : "None"
     }
 
-    const updateUser = await User.findOneAndUpdate({_id : findUser.id} , {accessToken : accessToken});
+
 
 
     res.cookie('accessToken' , accessToken , cookieOption)
@@ -156,39 +156,57 @@ const verifyUser = async (req, res) => {
   }
 }
 
-const updateUser = async (req , res) => {
+const updateUser = async (req, res) => {
   try {
-    const id = req.userId
+    const id = req.userId; // Extracted from the authentication middleware
 
-    const { name ,  phone , password ,  address} = req.body ;
-    let hashedPassword = "" 
-
-    if(password){
-      hashedPassword = bcrypt.hashedPassword(password , 10 )
+    if (!id) {
+      return res.status(404).json({ message: "User not found" });
     }
-    const updateUser = await User.findByIdAndUpdate(id , {name : name , phone : phone , password : hashedPassword ,  address : address })
 
+    const { name, phone, password, address } = req.body;
+
+
+    const updateFields = {};
+    if (name) updateFields.name = name;
+    if (phone) updateFields.phone = phone;
+    if (address) updateFields.address = address;
+
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updateFields.password = hashedPassword;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      updateFields,
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     return res.status(200).json({
-      success : true , 
-      error : false ,
-      message : "Error updating user "
-    })
+      success: true,
+      error: false,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating user:", error); // Log the error for debugging
+    return res.status(500).json({
+      success: false,
+      error: true,
+      message: "Error updating user",
+      errorDetails: error.message, // Include the error message for debugging
+    });
   }
-  catch(error) {
-      res.status(400).json({
-        error  : true  ,
-        success : false , 
-        message : "Error updating User"
-      })
-  }
-}
+};
 
 const updateAvatar = async (req, res) => {
   try {
-    
-    console.log(req.userId)
-  
+
     const userId = req.userId;
     const image = req.file;
     console.log(image)
@@ -200,26 +218,14 @@ const updateAvatar = async (req, res) => {
         message: "No file uploaded",
       });
     }
-    console.log("Uploading to Cloudinary...");
+
     const result = await uploadToCloudinary(image.buffer);
-    console.log("Cloudinary Upload Result:", result); // Debugging log
-
-    console.log("Updating user avatar in database...");
-
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       { avatar: result.secure_url },
       { new: true }
     );
-
-    if (!updatedUser) {
-      return res.status(404).json({
-        success: false,
-        error: true,
-        message: "User not found",
-      });
-    }
 
     return res.status(200).json({
       success: true,
@@ -228,7 +234,6 @@ const updateAvatar = async (req, res) => {
       avatarUrl: result.secure_url,
     });
   } catch (error) {
-    console.error("Error updating avatar:", error);
     res.status(500).json({
       error: true,
       success: false,
@@ -237,48 +242,46 @@ const updateAvatar = async (req, res) => {
   }
 };
 
-const refreshToken = async (req , res) => {
-  try{
-    const userId = req.userId;
-    const refreshToken = req.cookies.refreshToken ;
+const refreshToken = async (req, res) => {
+  try {
+    const userId = req.userId; // Extracted from the refresh token middleware
+    const refreshToken = req.cookies.refreshToken; // Get refreshToken from cookies
 
-    
-    const user = await User.findById(userId)
-
-    if(!user || user.refresh_token !== refreshToken){
-      return res.status(403).json({message : "Invalid or expired refresh Token "})
+    // Find the user in the database
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
 
 
-    const newAccessToken = jwt.sign({userId : userId} , process.env.ACCESS_TOKEN_KEY , {expiresIn : '15m'});
+    // Generate a new access token
+    const newAccessToken = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '15m' });
 
-    const cookieOption  = {
-      httpOnly : true , 
-      secure : true ,
-      sameSite : "Lax"
-    }
+    // Set the new access token in a cookie
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
+    };
+    res.cookie('accessToken', newAccessToken, cookieOptions);
 
-    res.cookie('accessToken' , accessToken , cookieOption)
-
+    // Respond with success message
     return res.status(200).json({
-      success : true ,
-      error : false ,
-      message: "accessToken successfully created",
-      accessToken : newAccessToken
-    })
-  }
-
-
-  
-  catch(error){
+      success: true,
+      error: false,
+      message: "Access token successfully created",
+      accessToken: newAccessToken, // Optionally send the new access token in the response
+    });
+  } catch (error) {
+    console.error("Error in refreshToken Controller:", error); // Log the error for debugging
     return res.status(500).json({
-      success : false , 
-      error : true , 
-      message : "Error creating a access token "
-    })
+      success: false,
+      error: true,
+      message: "Error creating an access token",
+      errorDetails: error.message, // Include the error message for debugging
+    });
   }
-}
-
+};
 
 module.exports = {
   signupUser ,

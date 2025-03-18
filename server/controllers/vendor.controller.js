@@ -121,7 +121,7 @@ const loginVendor = async(req , res) => {
       return res.status(400).json({
         success : false , 
         error : true , 
-        message : 'Error logging in user',
+        message : 'Error logging in vendor',
         error : `error`
       })
   }
@@ -222,6 +222,42 @@ const updateAvatar = async(req , res) => {
   }
 }
 
+const refreshToken = async (req, res) => {
+  try {
+    const vendorId = req.vendorId; 
+    console.log(vendorId)
+    const refreshToken = req.cookies.refreshToken; 
+
+    const vendor = await Vendor.findById(userId);
+    if (!vendor) {
+      return res.status(404).json({ message: "Vendor not found" });
+    }
+
+    const newAccessToken = jwt.sign({ vendorId: vendorId }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '15m' });
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: true,
+      sameSite: "Lax",
+    };
+    res.cookie('accessToken', newAccessToken, cookieOptions);
+
+    return res.status(200).json({
+      success: true,
+      error: false,
+      message: "Access token successfully created",
+      accessToken: newAccessToken, 
+    });
+  } catch (error) {
+    console.error("Error in refreshToken Controller:", error); 
+    return res.status(500).json({
+      success: false,
+      error: true,
+      message: "Error creating an access token",
+      errorDetails: error.message,
+    });
+  }
+};
 
 
 module.exports = {
@@ -230,6 +266,7 @@ module.exports = {
   loginVendor,
   logoutVendor,
   updateVendor,
-  updateAvatar
+  updateAvatar,
+  refreshToken
 }
 

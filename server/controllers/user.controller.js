@@ -254,10 +254,10 @@ const refreshToken = async (req, res) => {
     }
 
 
-    // Generate a new access token
+
     const newAccessToken = jwt.sign({ userId: userId }, process.env.ACCESS_TOKEN_KEY, { expiresIn: '15m' });
 
-    // Set the new access token in a cookie
+
     const cookieOptions = {
       httpOnly: true,
       secure: true,
@@ -265,7 +265,7 @@ const refreshToken = async (req, res) => {
     };
     res.cookie('accessToken', newAccessToken, cookieOptions);
 
-    // Respond with success message
+
     return res.status(200).json({
       success: true,
       error: false,

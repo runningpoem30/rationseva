@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const validator = require('validator')
+const bcrypt = require("bcryptjs")
 const userScehma = new mongoose.Schema({
   name : { 
     minLength : 4 , 
@@ -52,11 +53,21 @@ const userScehma = new mongoose.Schema({
   orderHistory : [{
     type : mongoose.Schema.Types.ObjectId ,
     ref : 'Order'
-  }]
+  }],
+  role : { 
+    type : String , 
+    enum : ['user' , 'admin']
+  }
 },{
   timestamps : true
 })
 
+userScehma.pre('save' , async function(next) {
+  if(this.isModified('password')){
+    this.password = await bcrypt.hash(this.password , 10)
+  }
+  next()
+})
 
 const User = mongoose.model('User' , userScehma)
 

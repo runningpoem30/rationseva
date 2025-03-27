@@ -58,6 +58,8 @@ const loginUser = async (req , res ) => {
   try {
     const { email , password } = req.body;
 
+    console.log("Stored user:", email, password,);
+
     const findUser = await User.findOne({email})
 
     if(!findUser) {
@@ -69,18 +71,17 @@ const loginUser = async (req , res ) => {
       return res.status(400).json({message : "Invalid Credentials"})
     }
 
-    const accessToken = jwt.sign({ userId : findUser._id} , process.env.ACCESS_TOKEN_KEY , {expiresIn : '10m'})
+    console.log("Stored user:", findUser.email, findUser.password, findUser.role);
 
-    const refreshToken = jwt.sign({ userId : findUser._id} , process.env.REFRESH_TOKEN_KEY , {expiresIn : '7d'})
+    const accessToken = jwt.sign({ userId : findUser._id , role : findUser.role } , process.env.ACCESS_TOKEN_KEY , {expiresIn : '10m'})
+
+    const refreshToken = jwt.sign({ userId : findUser._id , role : findUser.role} , process.env.REFRESH_TOKEN_KEY , {expiresIn : '7d'})
 
     const cookieOption  = {
       httpOnly : true , 
       secure : true ,
       sameSite : "None"
     }
-
-
-
 
     res.cookie('accessToken' , accessToken , cookieOption)
     res.cookie('refreshToken' , refreshToken ,  cookieOption)
@@ -295,10 +296,6 @@ module.exports = {
 
 
 
-
-// forgot password 
-// sending the otp 
-// password reset 
 
 
 

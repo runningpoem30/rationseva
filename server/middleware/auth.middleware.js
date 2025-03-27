@@ -50,10 +50,34 @@ const vendorAuth = async(req, res , next) => {
   }
 }
 
+const adminAuth = async (req , res , next) => {
+  try {
+    const token = req.cookies.accessToken
+    if(!token){
+      return res.status(400).json({message : "Please provide token"})
+    }
+
+    const decoded = jwt.verify(token , provess.env.ACCESS_TOKEN_KEY)
+    if(decoded.role !== 'admin'){
+      return res.status(403).json({message  : "admin role required"})
+    }
+
+    //attaching user data to the request 
+    req.adminId = decoded.userId;
+    next()
+  }
+  catch(error){
+    res.status(500).json({message :  "unauthorized access " , error : error})
+  }
+}
+
+
+
 
 module.exports = {
   auth,
-  vendorAuth
+  vendorAuth,
+  adminAuth
 }
 
 

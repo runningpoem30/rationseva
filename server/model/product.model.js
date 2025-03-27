@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema({
     required : true , 
     type : String 
   },
-  image : {
+  image : [{
     type : [ String ] , 
     validate : {
       validator : function(url){
@@ -14,7 +14,7 @@ const productSchema = new mongoose.Schema({
       },
       message : `One or more image URL links are invalid `
     }
-  },
+  }],
   category : {
     required : true ,
     type : mongoose.Schema.Types.ObjectId ,

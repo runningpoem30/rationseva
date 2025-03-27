@@ -9,21 +9,25 @@ const { uploadToCloudinary } = require("../util/cloudinary")
 const createProduct = async(req , res) => {
   try {
     const vendorId = req.vendorId;
-    const images = [];
+
     const vendor = await Vendor.findById(vendorId)
 
     if(!vendor){
       return res.status(500).send("Vendor not found")
     }
 
-    images = req.body.images;
-    
+    const images = req.files;
+    const imagesLinks = [] ;
 
-    const result = await uploadToCloudinary(image.buffer)
+    for (let i = 0 ; i < images.length ; i++) {
+      const result = await uploadToCloudinary(images[i].buffer); //uploading the images to cloudinary
+
+      imagesLinks.push(result.secure_url)
+    }
 
     const {name ,  Category , Subcategory , unit , stock , discount , description } = req.body;
 
-    const product = await Product.create({name , image : image.secure_url , Category , Subcategory , unit , stock , discount , description})
+    const product = await Product.create({name , image : imagesLinks , Category , Subcategory , unit , stock , discount , description})
 
     return res.status(201).json({
       success : true , 
@@ -31,9 +35,12 @@ const createProduct = async(req , res) => {
       message : 'Product Successfully created',
       product : product
     })
-    
   }
-  catch {
-    return res.status(500).json({message : "Error creating the product . Please try again "})
+  catch(error) {
+    return res.status(500).json({message : "Error creating the product . Please try again " , error : error})
   }
+}
+
+module.exports = {
+  createProduct
 }

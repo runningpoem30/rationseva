@@ -9,14 +9,14 @@ const admins = [
     email : 'septarya30@gmail.com',
     password : '123456',
     role : 'admin',
-    verify_email : 'true'
+    verify_email : true
   },
   {
     name : 'archie' ,
     email : 'archie.644@gmail.com',
     password : '123456',
     role : 'admin' ,
-    verify_email : 'true'
+    verify_email :  true
   }
 ]
 
@@ -26,12 +26,14 @@ const createAdminAccounts = async () => {
     for (let admin of admins){
       const hashedPassword = await bcrypt.hash(admin.password , 10);
       const existingAdmins = await User.findOne({email : admin.email})
+      console.log(existingAdmins)
       if(!existingAdmins){
         await User.create({
           name : admin.name , 
           email : admin.email , 
           password : hashedPassword , 
-          role : admin.role
+          role : admin.role, 
+          verify_email : admin.verify_email
         })
       }
 
@@ -45,3 +47,6 @@ const createAdminAccounts = async () => {
 
 
 module.exports = { createAdminAccounts }
+
+
+

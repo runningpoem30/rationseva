@@ -57,21 +57,21 @@ const signupUser = async (req , res) => {
 const loginUser = async (req , res ) => {
   try {
     const { email , password } = req.body;
-
-    console.log("Stored user:", email, password,);
+    
 
     const findUser = await User.findOne({email})
+    console.log(findUser.password)
 
+   
     if(!findUser) {
       return res.status(400).json({message : "User is not registered"})
     }
-    const checkPassword = await bcrypt.compare(password , findUser.password);
-
+   
+    const checkPassword = await bcrypt.compare(password, findUser.password);
     if(!checkPassword){
       return res.status(400).json({message : "Invalid Credentials"})
     }
 
-    console.log("Stored user:", findUser.email, findUser.password, findUser.role);
 
     const accessToken = jwt.sign({ userId : findUser._id , role : findUser.role } , process.env.ACCESS_TOKEN_KEY , {expiresIn : '10m'})
 
@@ -98,9 +98,9 @@ const loginUser = async (req , res ) => {
   catch (error) {
       return res.status(400).json({
         success : false , 
-        error : true , 
+        error : error, 
         message : 'Error logging in user',
-        error : `error`
+
       })
   }
 }

@@ -96,7 +96,7 @@ const loginVendor = async(req , res) => {
       return res.status(400).json({message : "Invalid Credentials"})
     }
 
-    const accessToken = jwt.sign({ vendorId : findVendor._id} , process.env.ACCESS_TOKEN_KEY , {expiresIn : '10m'})
+    const accessToken = jwt.sign({ vendorId : findVendor._id} , process.env.ACCESS_TOKEN_KEY , {expiresIn : '60m'})
 
     const refreshToken = jwt.sign({ vendorId : findVendor._id} , process.env.REFRESH_TOKEN_KEY , {expiresIn : '7d'})
 

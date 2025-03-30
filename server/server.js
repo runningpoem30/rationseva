@@ -9,6 +9,7 @@ const vendorRoutes = require('./routes/vendor.routes')
 const productRoutes = require('./routes/product.routes')
 const adminRoutes = require('./routes/admin.routes')
 const cookieParser = require('cookie-parser')
+const User = require("./model/user.model")
 require("dotenv").config()
 
 app.use(express.json())
@@ -27,7 +28,7 @@ app.use('/api/product' , productRoutes)
 
 
 databaseConnect().then(() => {
-  createAdminAccounts()
+   createAdminAccounts()
   app.listen(PORT , () => {
     console.log(`App is listening on PORT ${PORT}`)
   })

@@ -8,7 +8,6 @@ const { Product } = require("../model/product.model")
 
 
 
-ProductRoute.post('/create-product' , vendorAuth , upload.array('avatar') , createProduct  )
-
+ProductRoute.post('/create-product' , vendorAuth , upload.array('images') , createProduct  )
 
 module.exports = ProductRoute

@@ -1,8 +1,8 @@
 const express = require("express")
-const Product = require("../model/product.model")
-const Vendor = require('../model/vendor.model')
-const Category = require('../model/category.model')
-const Subcategory = require("../model/subcategory.model")
+const {Product} = require("../model/product.model")
+const {Vendor} = require('../model/vendor.model')
+const {Category} = require('../model/category.model')
+const {Subcategory} = require("../model/subcategory.model")
 const { uploadToCloudinary } = require("../util/cloudinary")
 
 
@@ -20,12 +20,11 @@ const createProduct = async(req , res) => {
     const imagesLinks = [] ;
 
     for (let i = 0 ; i < images.length ; i++) {
-      const result = await uploadToCloudinary(images[i].buffer); //uploading the images to cloudinary
-
+      const result = await uploadToCloudinary(images[i].buffer); 
       imagesLinks.push(result.secure_url)
     }
 
-    const {name ,  Category , Subcategory , unit , stock , discount , description } = req.body;
+    const {name ,  category , subCategory , unit , stock , discount , description } = req.body;
 
     const product = await Product.create({name , image : imagesLinks , Category , Subcategory , unit , stock , discount , description})
 
@@ -37,7 +36,7 @@ const createProduct = async(req , res) => {
     })
   }
   catch(error) {
-    return res.status(500).json({message : "Error creating the product . Please try again " , error : error})
+    return res.status(500).json({message : "Error creating the product . Please try again " , error : error.message})
   }
 }
 

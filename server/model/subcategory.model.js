@@ -16,7 +16,13 @@ const subcategorySchema = new mongoose.Schema({
   },
   categoryId : {
     type : mongoose.Schema.Types.ObjectId ,
-    ref : 'Category'
+    ref : 'Category',
+    required : true
+  },
+  createdBy :{
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "User",
+    required : true
   }
 },{
   timestamps : true

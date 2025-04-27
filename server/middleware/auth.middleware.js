@@ -11,13 +11,14 @@ const auth = async (req , res, next) => {
     }
 
     const decode = await jwt.verify(token , process.env.ACCESS_TOKEN_KEY);
-    //console.log(decode)
+    console.log(decode)
 
     if(!decode) {
       return res.status(400).json({ message : "unauthorized access"})
     }
 
-    req.userId = decode.userId; 
+    req.id = decode.userId; 
+    req.role = 'user'
     next()
 
   }
@@ -29,7 +30,6 @@ const auth = async (req , res, next) => {
 const vendorAuth = async(req, res , next) => {
   try{
     const token = req.cookies.accessToken
-    console.log(token)
     if(!token){
       return res.status(400).json({message : "Please provide token"})
     }
@@ -41,7 +41,8 @@ const vendorAuth = async(req, res , next) => {
       return res.status(400).json({message : "unauthorized access"})
     }
 
-    req.vendorId = decode.vendorId
+    req.id = decode.vendorId;
+    req.role = 'vendor'
     next()
 
   }

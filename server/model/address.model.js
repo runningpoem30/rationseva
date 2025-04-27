@@ -19,6 +19,18 @@ const addressSchema = new mongoose.Schema({
   mobile : {
     type : Number ,
     required : true 
+  },
+  user : {
+    type : mongoose.Schema.Types.ObjectId ,
+    ref : 'User'
+  },
+  vendor : {
+    type : mongoose.Schema.Types.ObjectId ,
+    ref : 'Vendor'
+  },
+  coordinates : {
+    type : [Number],
+    index : '2dsphere'
   }
 })
 

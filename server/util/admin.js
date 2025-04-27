@@ -26,7 +26,6 @@ const createAdminAccounts = async () => {
     for (let admin of admins){
       const hashedPassword = await bcrypt.hash(admin.password , 10);
       const existingAdmins = await User.findOne({email : admin.email})
-      console.log(existingAdmins)
       if(!existingAdmins){
         await User.create({
           name : admin.name , 
@@ -38,7 +37,6 @@ const createAdminAccounts = async () => {
       }
 
     }
-    console.log('Admin accounts created successfully');
   }
   catch(error){
     console.error('error creating admin accounts : ' , error)

@@ -18,8 +18,8 @@ const userScehma = new mongoose.Schema({
     }
   },
   password : {
-    required : true , 
-    type : String 
+    type : String , 
+    required : true
   },
   avatar : {
     type : String ,
@@ -46,10 +46,10 @@ const userScehma = new mongoose.Schema({
     type : Boolean ,
     default : false
   },
-  address : {
+  addresses : [{
     type : mongoose.Schema.Types.ObjectId,
     ref : 'Address'
-  },
+  }],
   orderHistory : [{
     type : mongoose.Schema.Types.ObjectId ,
     ref : 'Order'
@@ -62,12 +62,7 @@ const userScehma = new mongoose.Schema({
   timestamps : true
 })
 
-userScehma.pre('save' , async function(next) {
-  if(this.isModified('password')){
-    this.password = await bcrypt.hash(this.password , 10)
-  }
-  next()
-})
+
 
 const User = mongoose.model('User' , userScehma)
 

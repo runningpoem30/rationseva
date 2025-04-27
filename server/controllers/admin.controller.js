@@ -48,18 +48,25 @@ const createSubCategory = async (req , res) => {
       return res.status(500).send('Unauthorized access')
     } 
 
-    const images = req.file 
+    const { name , categoryName } = req.body ;
 
+    const images = req.file 
     const result = await uploadToCloudinary(images.buffer);
 
+    const category = await Category.findOne({name : categoryName})
+    if(!category){
+      return res.status(404).json({
+        success : false ,
+        message : `Category ${categoryName} not found`
+      })
+    }
 
-    const { name } = req.body ;
-    const category  = await Category.create({name : name , image : result.secure_url , createdBy : adminId})
+
+    const subCategory  = await Subcategory.create({name : name , image : result.secure_url , categoryId : category._id ,  createdBy : adminId})
 
     res.status(201).json({
       success : true , 
       message : "Sub-Category created successfully" , 
-      category
     })
 
   }
@@ -73,3 +80,9 @@ module.exports = {
    createCategory,
    createSubCategory
 }
+
+
+
+
+
+

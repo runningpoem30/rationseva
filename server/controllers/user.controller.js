@@ -23,10 +23,10 @@ const signupUser = async (req , res) => {
     if(existingUser){
       return res.status(400).json({message : "User already registered"})
     }
+    
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password , salt)
-
+    // const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password , 10)
     const newUser = new User({name : name , email : email , password : hashedPassword})
     await newUser.save()
 
@@ -54,25 +54,28 @@ const signupUser = async (req , res) => {
   }
 }
 
+
 const loginUser = async (req , res ) => {
   try {
     const { email , password } = req.body;
-    
-
+ 
     const findUser = await User.findOne({email})
-    console.log(findUser.password)
-
    
     if(!findUser) {
       return res.status(400).json({message : "User is not registered"})
     }
-   
+    console.log(findUser)
     const checkPassword = await bcrypt.compare(password, findUser.password);
+
+    console.log("Entered password:", password);
+    console.log("Stored hash:", findUser.password);
+    console.log("Password comparison result:", checkPassword);
+
     if(!checkPassword){
       return res.status(400).json({message : "Invalid Credentials"})
     }
 
-
+ 
     const accessToken = jwt.sign({ userId : findUser._id , role : findUser.role } , process.env.ACCESS_TOKEN_KEY , {expiresIn : '10m'})
 
     const refreshToken = jwt.sign({ userId : findUser._id , role : findUser.role} , process.env.REFRESH_TOKEN_KEY , {expiresIn : '7d'})
@@ -129,7 +132,6 @@ const logoutUser = async (req , res) => {
 
 const verifyUser = async (req, res) => {
   try {
-     
     const user = await User.findOne({_id : req.params.id})
     if(!user){
       return res.status(400).json({message : "User not found"})
@@ -159,7 +161,7 @@ const verifyUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const id = req.userId; // Extracted from the authentication middleware
+    const id = req.id; // Extracted from the authentication middleware
 
     if (!id) {
       return res.status(404).json({ message: "User not found" });
@@ -208,7 +210,7 @@ const updateUser = async (req, res) => {
 const updateAvatar = async (req, res) => {
   try {
 
-    const userId = req.userId;
+    const userId = req.id;
     const image = req.file;
     console.log(image)
 
@@ -245,7 +247,7 @@ const updateAvatar = async (req, res) => {
 
 const refreshToken = async (req, res) => {
   try {
-    const userId = req.userId; // Extracted from the refresh token middleware
+    const userId = req.id; // Extracted from the refresh token middleware
     const refreshToken = req.cookies.refreshToken; // Get refreshToken from cookies
 
     // Find the user in the database

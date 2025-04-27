@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs")
 const { sendEmail } = require("../util/sendEmail")
 const jwt = require("jsonwebtoken")
 const { uploadToCloudinary } = require("../util/cloudinary")
+const { Address} = require("../model/address.model")
 require('dotenv').config()
 
 const createVendor = async (req , res) => {
@@ -44,7 +45,6 @@ const createVendor = async (req , res) => {
     })
   }
 }
-
 const verifyVendor = async( req , res) => {
   try {
       const vendorId = req.params.id ; 
@@ -78,7 +78,6 @@ const verifyVendor = async( req , res) => {
     })
   }
 }
-
 const loginVendor = async(req , res) => {
   try {
     const { email , password } = req.body;
@@ -126,7 +125,6 @@ const loginVendor = async(req , res) => {
       })
   }
 }
-
 const logoutVendor = async(req, res) => {
   try{
      const cookieOption = {
@@ -151,24 +149,42 @@ const logoutVendor = async(req, res) => {
 
 const updateVendor = async(req , res) => {
   try{
-    const id = req.vendorId
+    const id = req.id
 
     if(!id){
       return res.status(404).json({message : "Vendor not found"})
     }
 
+    const vendor = await Vendor.findById(vendorId)
+    if(!vendor){
+      return res.status(400).json({message : "Vendor not found"})
+    }
+
     const { shopName , phone , password , address} = req.body
-    //creating the update object 
     const updateFields = {}
 
-    if(shopName) updateFields.shopName = shopName;
+    if (shopName) updateFields.shopName = shopName;
     if (phone) updateFields.phone = phone;
-    if (address) updateFields.address = address;
 
     if(password){
       const hashedPassword = await bcrypt.hash(password , 10);
       updateFields.password = hashedPassword
     }
+     
+    if(address){
+      const newAddress = await new Address({
+        addressLine : address.addressLine ,
+        city : address.city,
+        state : address.state ,
+        pincode : address.pincode
+      })
+
+      const saveAddress = await newAddress.save();
+
+      vendor.address = saveAddress._id
+    }
+
+
 
     const updateVendor = await Vendor.findByIdAndUpdate(id , updateFields , {new : true})
 
@@ -191,7 +207,7 @@ const updateVendor = async(req , res) => {
 
 const updateAvatar = async(req , res) => {
   try {
-    const id = req.vendorId  
+    const id = req.id  
     console.log(id)
     if(!id){
       return res.status(404).json({message : "User not found"})
@@ -224,7 +240,7 @@ const updateAvatar = async(req , res) => {
 
 const refreshToken = async (req, res) => {
   try {
-    const vendorId = req.vendorId; 
+    const vendorId = req.id; 
     console.log(vendorId)
     const refreshToken = req.cookies.refreshToken; 
 

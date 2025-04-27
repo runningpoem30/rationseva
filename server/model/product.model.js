@@ -15,6 +15,11 @@ const productSchema = new mongoose.Schema({
       message : `One or more image URL links are invalid `
     }
   }],
+  createdBy :{
+    type : mongoose.Schema.Types.ObjectId ,
+    ref : 'Vendor',
+    required : true
+  },
   category : {
     required : true ,
     type : mongoose.Schema.Types.ObjectId ,

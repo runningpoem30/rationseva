@@ -38,10 +38,10 @@ const vendorSchema = new mongoose.Schema({
      message : `Invalid phone number`
     }
  },
-  address : {
+  addresses : [{
     type : mongoose.Schema.Types.ObjectId ,
     ref : 'Address',
-  },
+  }],
   verify_email : {
     type : Boolean ,
     default : false

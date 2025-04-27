@@ -29,8 +29,9 @@ const viewAllVendorProducts = async(req ,res) => {
 //everyone can view - vendor and users both 
 const viewAllProducts= async(req , res) => {
   try {
-    const product = await Product.find(req.query)
-
+    const product = await Product.find()
+    const{category} = req.query
+    
     return res.status(200).json({
       success : true , 
       error : false ,
@@ -231,38 +232,55 @@ const deleteProduct = async(req, res) => {
 
 const getProduct = async (req, res) => {
   try {
-     const {lat , lng , radius=5 , category  , subcategory } = req.query
+    const { lat, lng, radius = 5, category, subCategory } = req.query;
+    const query = {};
 
-
-     const productQuery = {}
-     if(category){
-      const categoryName  = await Category.findOne({name : category})
-      if(categoryName) query.category = categoryName._id
-     }
-
-    let vendorIds = null ;
-     if(lat && lng) { 
-      vendorIds = await Vendor.find({
-        addresses : {
-          $nearSphere : {
-           $geometry : {
-            type : "Point",
-            coordinates : [parseFloat(lng) , parseFloat(lat)]
-           },
-           $maxDistance : radius * 1000
-         },
-        },
-      }).distinct('_id')
-
-      productQuery.vendor = { $in : vendorIds}
+    // 1. Handle Category Filter (by name)
+    if (category) {
+      const categoryDoc = await Category.findOne({ name: category });
+      if (!categoryDoc) {
+        return res.status(404).json({ error: "Category not found" });
+      }
+      query.category = categoryDoc._id;
     }
 
-    const products = await Product.find(productQuery).populate('vendor' , 'shopName')
+    // 2. Handle Subcategory Filter (by name)
+    if (subCategory) {
+      const subCategoryDoc = await Subcategory.findOne({ name: subCategory });
+      if (!subCategoryDoc) {
+        return res.status(404).json({ error: "Subcategory not found" });
+      }
+      query.subCategory = subCategoryDoc._id;
+    }
 
-    res.json(products)
+    // 3. Handle Location Filter
+    if (lat && lng) {
+      const nearbyVendors = await Vendor.find({
+        addresses: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [parseFloat(lng), parseFloat(lat)]
+            },
+            $maxDistance: radius * 1000 // Convert km to meters
+          }
+        }
+      }).select('_id');
+
+      query.vendor = { $in: nearbyVendors.map(v => v._id) };
   }
+
+  const products = await Product.find(query)
+      .populate('vendor', 'shopName')
+      .populate('category', 'name')
+      .populate('subCategory', 'name');
+
+    res.json(products);
+
+}
   catch(error){
     return res.status(400).json({
+      success : false , 
       error : true , 
       message : "cannot find product"
     })

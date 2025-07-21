@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors")
 const mongoose = require("mongoose");
 const { databaseConnect } = require("./util/database");
 const { createAdminAccounts } = require("./util/admin");
@@ -13,6 +14,7 @@ const addressRoutes = require("./routes/address.routes");
 const cookieParser = require("cookie-parser");
 const User = require("./model/user.model");
 require("dotenv").config();
+app.use(cors())
 
 app.use(express.json());
 app.use(cookieParser());

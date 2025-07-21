@@ -24,6 +24,8 @@ app.use("/api/", productRoutes);
 app.use("/api/", addressRoutes);
 app.use("/api/", cartRoutes);
 
+
+
 databaseConnect()
   .then(() => {
     createAdminAccounts();

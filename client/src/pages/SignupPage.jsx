@@ -42,12 +42,16 @@ function SignupPage() {
   return (
     <div>
         <h1>signup page</h1>
-        <div>
+        <div className='flex h-screen'>
         <form onSubmit={handleSubmit}>
-            <input name="name"value={formData.name} onChange={handleChange} placeholder='enter your name'></input>
+            <div className='flex h-screen'>
+                 <input name="name"value={formData.name} onChange={handleChange} placeholder='enter your name'></input>
             <input name="email"value={formData.email} onChange={handleChange} placeholder='enter your email'></input>
             <input  name="password" value={formData.password} onChange={handleChange} placeholder='enter your password'></input>
-            <button>Submit button</button>
+            <button>Submit button</button>yeah
+            </div>
+            
+           
         </form>
         </div>
       

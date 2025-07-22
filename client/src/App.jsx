@@ -8,10 +8,19 @@ import SignupPage from './pages/SignupPage'
 function App() {
 
   return (
+    <div className='flex h-max'>
+ <div className='w-[100px] h-[100px] bg-red-500 m-[20px] p-[100px] '>
+  <h1>dfkjhd</h1>
+ </div>
+
+    </div>
+    
+
+
   
-    <Routes>
-      <Route path='/signup' element={<SignupPage/>}/>  
-    </Routes>
+    // <Routes>
+    //   <Route path='/signup' element={<SignupPage/>}/>  
+    // </Routes>
  
    
      

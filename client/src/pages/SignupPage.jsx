@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import useFetch from '../hooks/UseFetch'
+import { useNavigate } from 'react-router-dom'
+import CommonComponentLanding from '@/components/CommonComponentLanding'
 
 
 function SignupPage() {
@@ -9,6 +11,8 @@ function SignupPage() {
         email : "",
         password : ""
     })
+    
+    const navigate = useNavigate()
 
     function handleChange(event){
         setFormData({
@@ -41,14 +45,31 @@ function SignupPage() {
 
   return (
     <div>
-        <h1>signup page</h1>
-        <div className='flex h-screen'>
+     
+        <div className='flex flex-row'>
+            <CommonComponentLanding/>
         <form onSubmit={handleSubmit}>
-            <div className='flex h-screen'>
-                 <input name="name"value={formData.name} onChange={handleChange} placeholder='enter your name'></input>
-            <input name="email"value={formData.email} onChange={handleChange} placeholder='enter your email'></input>
-            <input  name="password" value={formData.password} onChange={handleChange} placeholder='enter your password'></input>
-            <button>Submit button</button>yeah
+                 
+            <div className="flex flex-col space-y-4 items-center justify-center h-screen ">
+                <div className='space-y-4 ml-[300px]'>
+                <h1 className='text-5xl font-bold text-lime-400'>Please Signup To Continue</h1>
+                <h4 className='text-gray-800'>Please Signup to Continue</h4>
+                <div>
+                      <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px] 'name="name"value={formData.name} onChange={handleChange} placeholder='Name'></input>
+                </div>
+                <div>
+                    <input  className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name="email"value={formData.email} onChange={handleChange} placeholder='Email'></input>
+                </div>
+                <div>
+                    <input  className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name="password" value={formData.password} onChange={handleChange} placeholder='Password'></input>
+                </div>
+                <div>
+                    <button   className='border border-gray-300 p-[15px] pl-[100px] pr-[100px] rounded-2xl mt-[20px] bg-lime-500
+ text-xl text-white'>Signup</button>
+                </div>
+                <h1>Already a user ? Sign In</h1>
+                </div>
+  
             </div>
             
            

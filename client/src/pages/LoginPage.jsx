@@ -33,6 +33,11 @@ function LoginPage() {
         catch(err){
             console.log(err)
         }
+
+        setFormData({
+            email : "",
+            password : ""
+        })
     }
 
   return (

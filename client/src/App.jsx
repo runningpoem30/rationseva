@@ -6,6 +6,7 @@ import { Routes , Route } from 'react-router-dom'
 import SignupPage from './pages/SignupPage'
 import CommonComponentLanding from './components/CommonComponentLanding'
 import LoginPage from './pages/LoginPage'
+import VerifyYourEmail from './extras/VerifyYourEmail'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path='/signup' element={<SignupPage/>}/>  
       <Route path='/test' element={<CommonComponentLanding/>}/>
       <Route path='/login' element={<LoginPage/>}/>
+      <Route path='/verify-your-email' element={<VerifyYourEmail/>}/>
     </Routes>
  
    

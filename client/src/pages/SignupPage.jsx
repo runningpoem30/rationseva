@@ -3,6 +3,7 @@ import useFetch from '../hooks/UseFetch'
 import { useNavigate } from 'react-router-dom'
 import CommonComponentLanding from '@/components/CommonComponentLanding'
 import { Link } from 'react-router-dom';
+import toast , {Toaster} from 'react-hot-toast';
 
 
 function SignupPage() {
@@ -12,7 +13,10 @@ function SignupPage() {
         email : "",
         password : ""
     })
+
+    const [message, setMessage ] = useState("")
     
+    const navigate = useNavigate()
 
     function handleChange(event){
         setFormData({
@@ -20,9 +24,12 @@ function SignupPage() {
             [event.target.name] : event.target.value
         })
     }
- 
- 
 
+    function verifyYourEmail(){
+        navigate('/verify-your-email')
+    }
+ 
+ 
     async function handleSubmit (event){
         event.preventDefault()
 
@@ -38,21 +45,42 @@ function SignupPage() {
 
             const data = await res.json()
             console.log("response" , data)
-        }
-        catch(err){
-            console.log("error sending data" , err);
-            
-        }
+            console.log(data.message)
 
-        setFormData({
+              if(data?.success === true){
+                setMessage(data?.message)
+                toast.success(data?.message , {
+                    autoClose: 8000, 
+                   position: "top-center",
+                   pauseOnHover: true,
+               closeOnClick: true,
+                })
+                
+                setTimeout(() => {  
+                }, 4000);
+                verifyYourEmail()
+            }
+            else {
+                toast.error(data?.message || 'something went wrong')
+            }
+     setFormData({
           name: '',
           email: '',
           password: ''
        });
+
+    
+        }
+        catch(err){
+            console.log("error sending data" , err);
+             toast.error("Server error. Please try again."); 
+        }
+        
     }
 
   return (
     <div>
+            <Toaster position="top-center" />
      
         <div className='flex flex-row'>
             <CommonComponentLanding/>

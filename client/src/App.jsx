@@ -5,6 +5,7 @@ import './App.css'
 import { Routes , Route } from 'react-router-dom'
 import SignupPage from './pages/SignupPage'
 import CommonComponentLanding from './components/CommonComponentLanding'
+import LoginPage from './pages/LoginPage'
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <Routes>
       <Route path='/signup' element={<SignupPage/>}/>  
       <Route path='/test' element={<CommonComponentLanding/>}/>
+      <Route path='/login' element={<LoginPage/>}/>
     </Routes>
  
    

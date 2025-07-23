@@ -7,6 +7,15 @@ function UserVerified() {
     console.log('userid' , userId)
     console.log('token' , token)
 
+    async function verifyUser () {
+        try{
+            const res = await fetch(`http://localhost:8000/api/user/verify/${userId}/${token}`)
+            const data = await res.json()
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
   return (
     <div>
       user is verified , please proceed

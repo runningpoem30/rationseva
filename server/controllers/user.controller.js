@@ -148,7 +148,7 @@ const verifyUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid user" });
     }
     console.log(token);
-
+  
     await User.updateOne({ _id: user._id }, { verify_email: true });
     res.status(200).json({
       success: true,

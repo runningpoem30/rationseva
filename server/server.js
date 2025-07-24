@@ -14,7 +14,11 @@ const addressRoutes = require("./routes/address.routes");
 const cookieParser = require("cookie-parser");
 const User = require("./model/user.model");
 require("dotenv").config();
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
+
 
 app.use(express.json());
 app.use(cookieParser());
@@ -27,7 +31,9 @@ app.use("/api/", addressRoutes);
 app.use("/api/", cartRoutes);
 
 
-
+app.get('/' , (req, res) => {
+  res.send("hi there")
+})
 databaseConnect()
   .then(() => {
     createAdminAccounts();

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import CommonComponentLanding from '@/components/CommonComponentLanding'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 
 function LoginPage() {
 
@@ -9,11 +11,16 @@ function LoginPage() {
         password : ""
     })
 
+    const navigate = useNavigate()
     function handleChange(event){
         setFormData({
-            ...setFormData,
+            ...formData,
             [event.target.name] : event.target.value
         })
+    }
+
+    function navigateToHomePage(){
+        navigate('/home')
     }
 
     async function handleSubmit(event){
@@ -24,25 +31,36 @@ function LoginPage() {
                 headers : {
                     'Content-Type' : 'application/json'
                 },
-                body : JSON.stringify(formData)
+                body : JSON.stringify(formData),
+                credentials : 'include'
             })
 
             const result = await fetchApi.json()
             console.log("response" , result)
+
+            if(result.success === true ){
+                toast.success(`${result?.message} Taking to the home page`)
+                setTimeout(() => {
+                    navigateToHomePage() 
+                },2000);
+            }
+            else{
+                toast.error(result?.message || 'soemthing went wrong , please try again')
+            }
+
+            setFormData({
+                email : '',
+                password : ''
+            })
         }
         catch(err){
             console.log(err)
         }
-
-        setFormData({
-            email : "",
-            password : ""
-        })
     }
 
   return (
     <div>
-     
+     <Toaster position='top-center'/>
         <div className='flex flex-row'>
             <CommonComponentLanding/>
         <form onSubmit={handleSubmit}>

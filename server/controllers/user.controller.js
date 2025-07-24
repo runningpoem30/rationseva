@@ -63,7 +63,7 @@ const loginUser = async (req, res) => {
     const findUser = await User.findOne({ email });
 
     if (!findUser) {
-      return res.status(400).json({ message: "User is not registered" });
+      return res.status(400).json({ message: "User is not registered"});
     }
     console.log(findUser);
     const checkPassword = await bcrypt.compare(password, findUser.password);
@@ -91,7 +91,7 @@ const loginUser = async (req, res) => {
     const cookieOption = {
       httpOnly: true,
       secure: true,
-      sameSite: "None",
+      sameSite: "Lax", //"none needs https" , use Lax for localhost
     };
 
     res.cookie("accessToken", accessToken, cookieOption);

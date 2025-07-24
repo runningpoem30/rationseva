@@ -5,6 +5,8 @@ import CommonComponentLanding from './components/CommonComponentLanding'
 import LoginPage from './pages/LoginPage'
 import VerifyYourEmail from './extras/VerifyYourEmail'
 import UserVerified from './pages/UserVerified'
+import HomePage from './pages/HomePage'
+
 
 function App() {
 
@@ -16,6 +18,7 @@ function App() {
       <Route path='/login' element={<LoginPage/>}/>
       <Route path='/verify-your-email' element={<VerifyYourEmail/>}/>
       <Route path='/api/user/verify/:userId/:token' element={<UserVerified/>}/>
+      <Route path='/home' element={<HomePage/>}/>
     </Routes>
  
    

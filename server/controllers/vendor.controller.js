@@ -93,6 +93,7 @@ const verifyVendor = async (req, res) => {
     });
   }
 };
+
 const loginVendor = async (req, res) => {
   try {
     const { email, password } = req.body;

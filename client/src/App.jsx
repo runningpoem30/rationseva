@@ -7,6 +7,8 @@ import VerifyYourEmail from './extras/VerifyYourEmail'
 import UserVerified from './pages/UserVerified'
 import HomePage from './pages/HomePage'
 import VendorSignup from './pages/VendorSignup'
+import VendorVerified from './pages/VendorVerify'
+import AddProduct from './pages/AddProduct'
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
       <Route path='/api/user/verify/:userId/:token' element={<UserVerified/>}/>
       <Route path='/home' element={<HomePage/>}/>
       <Route path='/vendor-signup' element={<VendorSignup/>}/>
+      <Route path='/api/vendor/verify/:userId/:token' element={<VendorVerified/>}/>
+      <Route path='/add-product' element={<AddProduct/>}/>
     </Routes>
  
    

@@ -1,89 +1,68 @@
 import React, { useState } from 'react'
-import useFetch from '../hooks/UseFetch'
-import { useNavigate } from 'react-router-dom'
-import CommonComponentLanding from '@/components/CommonComponentLanding'
-import { Link } from 'react-router-dom';
-import toast , {Toaster} from 'react-hot-toast';
+import toast , {Toaster} from 'react-hot-toast'
+import { Link, useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
-
-function SignupPage() {
-
+function VendorSignup() {
     const [formData , setFormData] = useState({
-        name : "",
+        shopName : "",
         email : "",
-        password : ""
+        password  : ""
     })
-
-    const [message, setMessage ] = useState("")
-    
     const navigate = useNavigate()
 
     function handleChange(event){
         setFormData({
             ...formData,
-            [event.target.name] : event.target.value
+            [event.target.name] : event.target.value 
         })
     }
 
-    function verifyYourEmail(){
+      function verifyYourEmail(){
         navigate('/verify-your-email')
     }
  
- 
-    async function handleSubmit (event){
-        event.preventDefault()
 
+    async function handleSubmit(event){
+        event.preventDefault()
         try{
-            const res = await fetch("http://localhost:8000/api/user/signup", {
-                method : 'POST',
-                headers : {
+            const  res = await fetch('http://localhost:8000/api/vendor/create-vendor' , {
+                method : "POST",
+                 headers : {
                     'Content-Type' : 'application/json'
                 },
                 body : JSON.stringify(formData)
             })
 
+            const result = await res.json()
+            console.log("resposne" , result)
+            if(result?.success  === true){
+                toast.success(result?.message)
 
-            const data = await res.json()
-            console.log("response" , data)
-            console.log(data.message)
-
-              if(data?.success === true){
-                setMessage(data?.message)
-                toast.success(data?.message , {
-                    autoClose: 8000, 
-                   position: "top-center",
-                   pauseOnHover: true,
-               closeOnClick: true,
-                })
-                
-                setTimeout(() => {  
-                }, 4000);
-                verifyYourEmail()
+                setTimeout(() => {
+                    verifyYourEmail()
+                }, 2000);
             }
             else {
-                toast.error(data?.message || 'something went wrong')
+                toast.error(result?.message || 'something went wrong')
             }
-     setFormData({
-          name: '',
-          email: '',
-          password: ''
-       });
 
-    
+            setFormData({
+                shopName : "",
+                email : "",
+                password : ""
+          })
         }
         catch(err){
-            console.log("error sending data" , err);
-             toast.error("Server error. Please try again."); 
+            console.log(err)
         }
-        
     }
 
-  return (
+      return (
     <div>
         <Toaster position="top-center" />
      
         <div className='flex flex-row'>
-            <CommonComponentLanding/>
         <form onSubmit={handleSubmit}>
                  
             <div className="flex flex-col space-y-4 items-center justify-center h-screen ">
@@ -91,7 +70,7 @@ function SignupPage() {
                 <h1 className='text-5xl font-bold text-gray-800'>Sign in to RationSeva</h1>
                 <div className='ml-[80px] space-y-4'>
 <div>
-                      <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px] 'name="name"value={formData.name} onChange={handleChange} placeholder='Name'></input>
+                      <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px] 'name="shopName"value={formData.shopName} onChange={handleChange} placeholder='Name'></input>
                 </div>
                 <div>
                     <input  className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name="email"value={formData.email} onChange={handleChange} placeholder='Email'></input>
@@ -122,13 +101,8 @@ function SignupPage() {
         </form>
         </div>
       
-       
     </div>
   )
 }
 
-export default SignupPage
-
-
-
-//“Daily Needs. Multiple Vendors. One Platform.”
+export default VendorSignup

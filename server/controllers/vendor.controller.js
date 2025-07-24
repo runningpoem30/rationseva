@@ -11,7 +11,7 @@ const createVendor = async (req, res) => {
   try {
     const { shopName, email, password } = req.body;
 
-    if (!email || !shopName || !email) {
+    if (!email || !shopName || !password) {
       return res
         .status(500)
         .json({ message: "Please enter all the necessary fields" });
@@ -53,6 +53,8 @@ const createVendor = async (req, res) => {
     });
   }
 };
+
+
 const verifyVendor = async (req, res) => {
   try {
     const vendorId = req.params.id;

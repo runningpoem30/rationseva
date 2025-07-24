@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage'
 import VerifyYourEmail from './extras/VerifyYourEmail'
 import UserVerified from './pages/UserVerified'
 import HomePage from './pages/HomePage'
+import VendorSignup from './pages/VendorSignup'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Route path='/verify-your-email' element={<VerifyYourEmail/>}/>
       <Route path='/api/user/verify/:userId/:token' element={<UserVerified/>}/>
       <Route path='/home' element={<HomePage/>}/>
+      <Route path='/vendor-signup' element={<VendorSignup/>}/>
     </Routes>
  
    

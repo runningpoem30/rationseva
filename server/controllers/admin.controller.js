@@ -5,7 +5,6 @@ const { User } = require("../model/user.model");
 const { uploadToCloudinary } = require("../util/cloudinary");
 
 
-
 const createCategory = async (req , res) => {
   try{
     const adminId = req.adminId;

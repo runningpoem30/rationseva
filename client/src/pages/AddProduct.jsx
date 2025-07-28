@@ -76,6 +76,9 @@ function AddProduct() {
         </div>
       )}
     </div>
+    <div>
+      <label htmlFor=""><input type='file' id='file' className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[335px]'></input></label>
+    </div>
  
 
       

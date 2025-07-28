@@ -1,90 +1,84 @@
 import React, { useState } from 'react'
-import toast , {Toaster} from 'react-hot-toast'
-import { Link, useNavigate } from 'react-router-dom'
-import { Navigate } from 'react-router-dom'
+import CommonComponentLanding from '@/components/CommonComponentLanding'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 
-function VendorSignup() {
+function VendorLoginPage() {
+
     const [formData , setFormData] = useState({
-        shopName : "",
         email : "",
-        password  : ""
+        password : ""
     })
-    const navigate = useNavigate()
 
+    const navigate = useNavigate()
     function handleChange(event){
         setFormData({
             ...formData,
-            [event.target.name] : event.target.value 
+            [event.target.name] : event.target.value
         })
     }
 
-      function verifyYourEmail(){
-        navigate('/verify-your-email')
+    function navigateToHomePage(){
+        navigate('/vendor-dashboard')
     }
- 
 
     async function handleSubmit(event){
         event.preventDefault()
         try{
-            const  res = await fetch('http://localhost:8000/api/vendor/create-vendor' , {
+            const fetchApi = await fetch("http://localhost:8000/api/vendor/login" , {
                 method : "POST",
-                 headers : {
+                headers : {
                     'Content-Type' : 'application/json'
                 },
-                body : JSON.stringify(formData)
+                body : JSON.stringify(formData),
+                credentials : 'include'
             })
 
-            const result = await res.json()
-            console.log("resposne" , result)
-            if(result?.success  === true){
-                toast.success(result?.message)
+            const result = await fetchApi.json()
+            console.log("response" , result)
 
+            if(result.success === true ){
+                toast.success(`${result?.message} Taking to the Dashboard`)
                 setTimeout(() => {
-                    verifyYourEmail()
-                }, 2000);
+                    navigateToHomePage() 
+                },2000);
             }
-            else {
-                toast.error(result?.message || 'something went wrong')
+            else{
+                toast.error(result?.message || 'soemthing went wrong , please try again')
             }
 
             setFormData({
-                shopName : "",
-                email : "",
-                password : ""
-          })
+                email : '',
+                password : ''
+            })
         }
         catch(err){
             console.log(err)
         }
     }
 
-      return (
+  return (
     <div>
-        <Toaster position="top-center" />
-     
+     <Toaster position='top-center'/>
         <div className='flex flex-row'>
-             <div>
+                    <div>
                 <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
                 <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
-                <h1 class="text-8xl font-bold text-gray-800">
+                <h1 class="text-[80px] font-bold text-gray-800">
                 <div className='py-[180px] flex flex-col  '>
-                <span>Your Ration.</span><br />
-                <span>Your Store.</span><br/>
-                <span>Your Profit.</span>
+                <span>Welcome Back,</span><br />
+                <span>Vendor</span><br/>
+              
                 </div>
                 </h1>
                 
              </div>
         <form onSubmit={handleSubmit}>
-          
-                 
             <div className="flex flex-col space-y-4 items-center justify-center h-screen ">
                 <div className='space-y-9 ml-[300px]'>
-                <h1 className='text-5xl font-bold text-gray-800'>Sign in to RationSeva</h1>
+                <h1 className='text-5xl font-bold text-gray-800'>Log in to RationSeva</h1>
                 <div className='ml-[80px] space-y-4'>
-<div>
-                      <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px] 'name="shopName"value={formData.shopName} onChange={handleChange} placeholder='Name'></input>
-                </div>
                 <div>
                     <input  className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name="email"value={formData.email} onChange={handleChange} placeholder='Email'></input>
                 </div>
@@ -93,13 +87,13 @@ function VendorSignup() {
                 </div>
                 <div>
                     <button   className='border border-gray-300 p-[15px] pl-[100px] pr-[100px] rounded-2xl mt-[20px] bg-[#F8CB46] ml-[40px]
- text-xl text-white'>Signup</button>
+ text-xl text-white'>Log in</button>
                 </div>
                 <div className='ml-[15px]'>
                     <h1 className="ml-[70px] text-sm">
-                    Already a user?{' '}
-                    <Link to="/login" className="text-green-600 underline hover:text-green-800 cursor-pointer">
-                        Sign In
+                    New User?{' '}
+                    <Link to="/signup" className="text-green-600 underline hover:text-green-800 cursor-pointer">
+                        Sign up
                     </Link>
                     </h1>    
                 </div>
@@ -114,8 +108,12 @@ function VendorSignup() {
         </form>
         </div>
       
+       
     </div>
   )
 }
 
-export default VendorSignup
+export default VendorLoginPage
+
+
+

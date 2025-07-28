@@ -9,6 +9,8 @@ import HomePage from './pages/HomePage'
 import VendorSignup from './pages/VendorSignup'
 import VendorVerified from './pages/VendorVerify'
 import AddProduct from './pages/AddProduct'
+import VendorLoginPage from './pages/VendorLoginPage'
+import VendorDashboard from './pages/VendorDashboard'
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
       <Route path='/vendor-signup' element={<VendorSignup/>}/>
       <Route path='/api/vendor/verify/:userId/:token' element={<VendorVerified/>}/>
       <Route path='/add-product' element={<AddProduct/>}/>
+      <Route path='/vendor-login' element={<VendorLoginPage/>}/>
+      <Route path='/vendor-dashboard' element={<VendorDashboard/>}/>
     </Routes>
  
    

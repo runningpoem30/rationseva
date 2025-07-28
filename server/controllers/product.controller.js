@@ -126,7 +126,6 @@ const createProduct = async (req, res) => {
     const {
       name,
       categoryName,
-      subCategoryName,
       unit,
       stock,
       discount,
@@ -149,7 +148,6 @@ const createProduct = async (req, res) => {
       image: imagesLinks,
       createdBy: vendorId,
       category: categoryExists._id,
-      subCategory: subCategoryExists._id,
       unit,
       stock,
       discount,

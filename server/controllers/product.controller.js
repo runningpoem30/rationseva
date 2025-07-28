@@ -89,6 +89,23 @@ const viewAllProducts = async (req, res) => {
   }
 };
 
+const getAllCategories = async(req ,res ) =>{
+  try{
+      const findCategory = await Category.find();
+      return res.status(200).json({
+        success : true ,
+        error : false,
+        data : findCategory
+      })
+
+  }
+  catch(error){
+    console.log(error)
+  }
+}
+
+
+
 const createProduct = async (req, res) => {
   try {
     const vendorId = req.vendorId;
@@ -308,4 +325,5 @@ module.exports = {
   deleteProduct,
   viewAllVendorProducts,
   viewAllProducts,
+  getAllCategories
 };

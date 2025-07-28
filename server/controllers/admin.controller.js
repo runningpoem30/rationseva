@@ -38,6 +38,7 @@ const createCategory = async (req , res) => {
   }
 }
 
+
 const createSubCategory = async (req , res) => {
   try{
     const adminId = req.adminId;
@@ -49,8 +50,11 @@ const createSubCategory = async (req , res) => {
 
     const { name , categoryName } = req.body ;
 
+    
     const images = req.file 
     const result = await uploadToCloudinary(images.buffer);
+    
+   
 
     const category = await Category.findOne({name : categoryName})
     if(!category){
@@ -61,7 +65,13 @@ const createSubCategory = async (req , res) => {
     }
 
 
-    const subCategory  = await Subcategory.create({name : name , image : result.secure_url , categoryId : category._id ,  createdBy : adminId})
+    const subCategory  = await Subcategory.create(
+      {
+      name : name ,
+      image : result.secure_url , 
+      categoryId : category._id ,  
+      createdBy : adminId
+    })
 
     res.status(201).json({
       success : true , 

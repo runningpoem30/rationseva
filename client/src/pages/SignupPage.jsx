@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import CommonComponentLanding from '@/components/CommonComponentLanding'
 import { Link } from 'react-router-dom';
 import toast , {Toaster} from 'react-hot-toast';
+import { baseURL } from '@/BaseUrl';
 
 
 function SignupPage() {
@@ -34,7 +35,7 @@ function SignupPage() {
         event.preventDefault()
 
         try{
-            const res = await fetch("http://localhost:8000/api/user/signup", {
+            const res = await fetch(`${baseURL}api/user/signup`, {
                 method : 'POST',
                 headers : {
                     'Content-Type' : 'application/json'

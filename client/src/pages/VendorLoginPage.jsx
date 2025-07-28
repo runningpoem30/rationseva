@@ -62,23 +62,25 @@ function VendorLoginPage() {
     <div>
      <Toaster position='top-center'/>
         <div className='flex flex-row'>
-                    <div>
-                <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
-                <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
-                <h1 class="text-[80px] font-bold text-gray-800">
-                <div className='py-[180px] flex flex-col  '>
-                <span>Welcome Back,</span><br />
-                <span>Vendor</span><br/>
-              
-                </div>
-                </h1>
-                
-             </div>
+
+           <div className=''>
+  <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
+  <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
+
+  <h1 className="text-8xl font-bold text-gray-800">
+    <div className='py-[180px] flex flex-col leading-none'>
+      <span>Welcome</span>
+      <span>back,</span>
+      <span>Vendor</span>
+    </div>
+  </h1>
+</div>
+
         <form onSubmit={handleSubmit}>
             <div className="flex flex-col space-y-4 items-center justify-center h-screen ">
                 <div className='space-y-9 ml-[300px]'>
-                <h1 className='text-5xl font-bold text-gray-800'>Log in to RationSeva</h1>
-                <div className='ml-[80px] space-y-4'>
+                <h1 className='text-5xl font-bold text-gray-800 ml-[100px]'>Log in to RationSeva</h1>
+                <div className='ml-[190px] space-y-4'>
                 <div>
                     <input  className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name="email"value={formData.email} onChange={handleChange} placeholder='Email'></input>
                 </div>
@@ -86,7 +88,7 @@ function VendorLoginPage() {
                     <input  className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name="password" value={formData.password} onChange={handleChange} placeholder='Password'></input>
                 </div>
                 <div>
-                    <button   className='border border-gray-300 p-[15px] pl-[100px] pr-[100px] rounded-2xl mt-[20px] bg-[#F8CB46] ml-[40px]
+                    <button   className='border border-gray-300 p-[15px] pl-[100px] pr-[100px] rounded-2xl mt-[20px] bg-[#F8CB46] ml-[10px]
  text-xl text-white'>Log in</button>
                 </div>
                 <div className='ml-[15px]'>

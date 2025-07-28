@@ -118,6 +118,10 @@ const createProduct = async (req, res) => {
     const images = req.files;
     const imagesLinks = [];
 
+    if (!images || images.length === 0) {
+  return res.status(400).json({ message: "Please upload at least one image." });
+}
+
     for (let i = 0; i < images.length; i++) {
       const result = await uploadToCloudinary(images[i].buffer);
       imagesLinks.push(result.secure_url);
@@ -134,10 +138,9 @@ const createProduct = async (req, res) => {
 
     const [categoryExists, subCategoryExists] = await Promise.all([
       Category.findOne({ name: categoryName }),
-      Subcategory.findOne({ name: subCategoryName }),
     ]);
 
-    if (!categoryExists || !subCategoryExists) {
+    if (!categoryExists) {
       return res
         .status(400)
         .json({ message: "invalid category or subcategory" });

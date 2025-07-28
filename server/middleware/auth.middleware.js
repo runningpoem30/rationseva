@@ -41,7 +41,7 @@ const vendorAuth = async(req, res , next) => {
       return res.status(400).json({message : "unauthorized access"})
     }
 
-    req.id = decode.vendorId;
+    req.vendorId = decode.vendorId;
     req.role = 'vendor'
     next()
 

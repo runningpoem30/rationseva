@@ -33,12 +33,13 @@ function AddProduct() {
         headers : {
           'Content-Type' : 'application/json'
         },
-        body : JSON.stringify(formData)
+        body : JSON.stringify(formData),
+        credentials : 'include'
       })
 
 
       const data = await result.json();
-      console.log("response" , data)
+      //console.log("response" , data)
     }
     catch(err){
       console.log(err)

@@ -28,10 +28,8 @@ function VendorSignup() {
         try{
             const  res = await fetch('http://localhost:8000/api/vendor/create-vendor' , {
                 method : "POST",
-                 headers : {
-                    'Content-Type' : 'application/json'
-                },
-                body : JSON.stringify(formData)
+                body : JSON.stringify(formData),
+                
             })
 
             const result = await res.json()
@@ -63,18 +61,21 @@ function VendorSignup() {
         <Toaster position="top-center" />
      
         <div className='flex flex-row'>
-             <div>
-                <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
-                <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
-                <h1 class="text-8xl font-bold text-gray-800">
-                <div className='py-[180px] flex flex-col  '>
-                <span>Your Ration.</span><br />
-                <span>Your Store.</span><br/>
-                <span>Your Profit.</span>
-                </div>
-                </h1>
-                
-             </div>
+             <div className='flex flex-row'>
+  <div>
+    <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
+    <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
+
+    <h1 className="text-8xl font-bold text-gray-800">
+      <div className='py-[180px] flex flex-col leading-none'>
+        <span>Your Ration.</span>
+        <span>Your Store.</span>
+        <span>Your Profit.</span>
+      </div>
+    </h1>
+  </div>
+</div>
+
         <form onSubmit={handleSubmit}>
           
                  

@@ -38,6 +38,7 @@ function AddProduct() {
     formDataToSend.append("description" , formData.description)
     formDataToSend.append("discount" , formData.discount);
     formDataToSend.append("images" , formData.images);
+    formDataToSend.append("categoryName" , formData.category)
     console.log(formData.name , formData.images)
     try{
       const result = await fetch(`${baseURL}api/create-product`,{
@@ -51,6 +52,7 @@ function AddProduct() {
     catch(err){
       console.log(err)
     }
+
   }
 
   function toggleDropDown(){
@@ -107,19 +109,25 @@ function AddProduct() {
         <IoIosArrowDropdown className='text-xl' />
       </button>
 
-      {showDropDown && (
-        <div className="absolute mt-2 space-y-2">
-          {data?.length > 0 &&
-            data.map((item) => (
-              <div
-                key={item._id}
-                className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[335px]'
-              >
-                {item.name}
-              </div>
-            ))}
+   {showDropDown && (
+  <div className="absolute mt-2 space-y-2">
+    {data?.length > 0 &&
+      data.map((item) => (
+        <div
+          key={item._id}
+          onClick={() => {
+            setFormData({ ...formData, category: item.name }); // ✅ set category
+            setShowDropDown(false); // ✅ close dropdown
+            console.log("Selected category:", item.name);
+          }}
+          className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[335px]'
+        >
+          {item.name}
         </div>
-      )}
+      ))}
+  </div>
+)}
+
     </div>
     <div>
       <input type='file' className='form-control' accept='images/*' name='images' onChange={handleClick}/>

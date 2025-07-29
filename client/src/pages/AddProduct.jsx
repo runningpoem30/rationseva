@@ -46,8 +46,8 @@ function AddProduct() {
         credentials : 'include',
         body : formDataToSend
       })
-       //const data = await result.json();
-      //console.log("response" , data)
+       const data = await result.json();
+      console.log("response" , data)
     }
     catch(err){
       console.log(err)

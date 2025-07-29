@@ -14,7 +14,7 @@ const {
 const { Product } = require("../model/product.model");
 
 ProductRoute.get("/view-all-products", viewAllProducts);
-ProductRoute.get("/view-all-vendor-products", vendorAuth, viewAllProducts);
+ProductRoute.get("/view-all-vendor-products", vendorAuth, viewAllVendorProducts);
 ProductRoute.post(
   "/create-product",
   vendorAuth,

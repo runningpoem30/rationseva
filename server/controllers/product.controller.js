@@ -12,7 +12,8 @@ const viewAllVendorProducts = async (req, res) => {
   try {
     const vendorId = req.vendorId;
     console.log(vendorId)
-    const product = await Product.find({createdBy : vendorId });
+    const product = await Product.find({ createdBy: new mongoose.Types.ObjectId(vendorId) }).populate("createdBy" , "shopName").populate("category" , "name")
+
 
     return res.status(200).json({
       success: true,

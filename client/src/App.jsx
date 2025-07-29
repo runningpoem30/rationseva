@@ -11,7 +11,7 @@ import VendorVerified from './pages/VendorVerify'
 import AddProduct from './pages/AddProduct'
 import VendorLoginPage from './pages/VendorLoginPage'
 import VendorDashboard from './pages/VendorDashboard'
-
+import AddAdressPage from './pages/AddAdressPage'
 
 function App() {
 
@@ -29,6 +29,7 @@ function App() {
       <Route path='/vendor/add-product' element={<AddProduct/>}/>
       <Route path='/vendor-login' element={<VendorLoginPage/>}/>
       <Route path='/vendor-dashboard' element={<VendorDashboard/>}/>
+      <Route path='/add-address' element={<AddAdressPage/>}/>
     </Routes>
  
    

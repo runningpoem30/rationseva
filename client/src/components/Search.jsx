@@ -21,10 +21,10 @@ function Search() {
 
   return (
     <div>
-           <div className='relative w-full max-w-md'>
+           <div className='relative w-full max-w-md ml-[50px]'>
           
               <IoSearch className='absolute left-3 top-1/2 transform -translate-y-1/2 '/>
-         <input className='border border gray-1000 rounded-2xl pr-[150px] py-[10px] pl-[45px]'placeholder={`Search for ${suggestions[placeholder]}`}></input>
+         <input className='border border gray-1000 rounded-2xl w-[450px] py-[10px] pl-[45px]'placeholder={`${suggestions[placeholder]}`}></input>
  
 
         </div>

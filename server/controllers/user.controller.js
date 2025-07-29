@@ -88,7 +88,7 @@ const loginUser = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    const cookieOption = {
+    const cookieOption = { 
       httpOnly: true,
       secure: true,
       sameSite: "Lax", //"none needs https" , use Lax for localhost

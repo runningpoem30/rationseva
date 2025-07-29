@@ -14,12 +14,14 @@ function VendorDashboard() {
      });
     const data = await result.json();
     setProductData(data.data)
-    console.log(productData)
+   
     }
     catch(err){
         console.log(err)
     }
    }
+
+    console.log(productData)
 
    useEffect(() => {
         getData()
@@ -37,7 +39,7 @@ function VendorDashboard() {
         stock={item.stock}
         unit={item.unit}
         createdBy={item.createdBy.shopName}
-        category={item.category.name}
+        category={item.category?.name}
       />
     ))
   }

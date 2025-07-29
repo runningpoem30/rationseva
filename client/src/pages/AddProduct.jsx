@@ -4,6 +4,7 @@ import { baseURL } from '@/BaseUrl';
 import { IoIosArrowDropdown } from "react-icons/io";
 
 
+
 function AddProduct() {
   
   const [data , setData] = useState();
@@ -20,32 +21,37 @@ function AddProduct() {
   })
 
  function handleClick(event){
-      setFormData({...formData ,
-       [event.target.name] : event.target.value
-      })
+   const { name , files , value , type } = event.target;
+
+   setFormData({
+    ...formData,
+    [name] : type === 'file' ? files[0] : value
+   })
   }
 
   async function handleSubmit(event){
     event.preventDefault()
+    const formDataToSend = new FormData();
+    formDataToSend.append("name" , formData.name);
+    formDataToSend.append("unit" , formData.unit);
+    formDataToSend.append("stock" , formData.stock);
+    formDataToSend.append("description" , formData.description)
+    formDataToSend.append("discount" , formData.discount);
+    formDataToSend.append("images" , formData.images);
+    console.log(formData.name , formData.images)
     try{
       const result = await fetch(`${baseURL}api/create-product`,{
         method : 'POST',
-        headers : {
-          'Content-Type' : 'application/json'
-        },
-        body : JSON.stringify(formData),
-        credentials : 'include'
+        credentials : 'include',
+        body : formDataToSend
       })
-
-
-      const data = await result.json();
+       //const data = await result.json();
       //console.log("response" , data)
     }
     catch(err){
       console.log(err)
     }
   }
-
 
   function toggleDropDown(){
       setShowDropDown((prev) => !prev);
@@ -71,26 +77,26 @@ function AddProduct() {
   return (
     <div>
 
-        <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
+    <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
     <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
     <h1>Hi Vendor , Please Add Your Product</h1>
 
    <form onSubmit={handleSubmit}>
     <div className='flex flex-col gap-y-[4px] mt-[90px]'>
       <div>
-        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' placeholder='name'></input>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='name' placeholder='name' value={formData.name} onChange={handleClick}></input>
       </div>
       <div>
-        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' placeholder='unit'></input>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name='unit' placeholder='unit' value={formData.unit} onChange={handleClick}></input>
       </div>
       <div>
-        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' placeholder='stock'></input>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name ='stock' placeholder='stock' value={formData.stock} onChange={handleClick}></input>
       </div>
       <div>
-        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' placeholder='discount'></input>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='discount' placeholder='discount' value={formData.discount} onChange={handleClick}></input>
       </div>
       <div>
-        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' placeholder='description'></input>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='description' placeholder='description' value={formData.description} onChange={handleClick}></input>
       </div>
      <div className="relative inline-block">
       <button
@@ -116,11 +122,11 @@ function AddProduct() {
       )}
     </div>
     <div>
-      <label htmlFor=""><input type='file' id='file' className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[335px]'></input></label>
+      <input type='file' className='form-control' accept='images/*' name='images' onChange={handleClick}/>
     </div>
     </div>
     <div>
-      <button onClick={handleClick}className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-[#54B226] text-white font-bold mt-[10px]'> Submit Button</button>
+      <button className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-[#54B226] text-white font-bold mt-[10px]'> Submit Button</button>
      
     </div>
    </form>

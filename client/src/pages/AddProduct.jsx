@@ -100,14 +100,15 @@ function AddProduct() {
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='description' placeholder='description' value={formData.description} onChange={handleClick}></input>
       </div>
-     <div className="relative inline-block">
-      <button
+     <div className="inline-block">
+      
+      <div> <button
         onClick={toggleDropDown}
-        className='flex items-center justify-between font-grey-100 border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[335px]'
+        className='flex items-center justify-between font-grey-100 border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[290px]'
       >
         <span>Category</span>
         <IoIosArrowDropdown className='text-xl' />
-      </button>
+      </button></div>
 
    {showDropDown && (
   <div className="absolute mt-2 space-y-2">
@@ -116,22 +117,36 @@ function AddProduct() {
         <div
           key={item._id}
           onClick={() => {
-            setFormData({ ...formData, category: item.name }); // ✅ set category
-            setShowDropDown(false); // ✅ close dropdown
+            setFormData({ ...formData, category: item.name }); 
+            setShowDropDown(false); 
             console.log("Selected category:", item.name);
           }}
-          className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[335px]'
+          className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[290px]'
         >
           {item.name}
         </div>
       ))}
   </div>
 )}
+    </div>
+  <div>
+  <label 
+    htmlFor="images"
+    className="border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer inline-block w-[290px]"
+  >
+    Add Images
+  </label>
 
-    </div>
-    <div>
-      <input type='file' className='form-control' accept='images/*' name='images' onChange={handleClick}/>
-    </div>
+  <input
+    type="file"
+    id="images"
+    name="images"
+    accept="image/*"
+    onChange={handleClick}
+    style={{ display: 'none' }} // hides default input
+  />
+</div>
+
     </div>
     <div>
       <button className='border border-gray-300 py-[12px] px-4 rounded-2xl bg-[#54B226] text-white font-bold mt-[10px]'> Submit Button</button>

@@ -6,22 +6,21 @@ function VendorProduct({name, unit , stock , discount , description , category, 
 
     
   return (
-    <div className='border border-grey-500 '>
-      This is the Product Card which is added by the Vendor
-      <div className='bg-white shadow-md rounded-lg p-4 w-[400px] h-[600px]'>
+    <div className=''>
+      <div className='bg-black-500 shadow-md rounded-lg p-4 w-[400px] h-[600px]'>
         <div>
         <h1 className='w-[100px]' className='text-4xl font-bold text-[#54B226]'>{name}</h1>
               </div>
-      <div> 
-         <img src={images} className='p-[50px]' />
+      <div className=' border  rounded-[10px]'> 
+         <img src={images} className='' />
      </div> 
      <div>
-      <h1>{unit}</h1>
-      <h1>{discount}</h1>
-      <h1>{description}</h1>
-      <h1>{category}</h1>
-      <h1>{stock}</h1>
-      <h1>{createdBy}</h1>
+      <h1>Price : {unit}</h1>
+      <h1>Discount : {discount}</h1>
+      <h1>Description : {description}</h1>
+      <h1>Category : {category}</h1>
+      <h1>Stock : {stock}</h1>
+      <h1 className='text-[#54B226] font-bold'>Created by {createdBy}</h1>
      </div>
       </div>
      

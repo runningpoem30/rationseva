@@ -11,7 +11,8 @@ const { Address } = require("../model/address.model");
 const viewAllVendorProducts = async (req, res) => {
   try {
     const vendorId = req.vendorId;
-    const product = await Product.find({ createdBy: vendorId });
+    console.log(vendorId)
+    const product = await Product.find({createdBy : vendorId });
 
     return res.status(200).json({
       success: true,
@@ -20,7 +21,8 @@ const viewAllVendorProducts = async (req, res) => {
       message: "fetched all the products",
     });
   } catch (error) {
-    res.status(500).json({ message: "error fetching all the products" });
+    console.log('error' , error)
+    // res.status(500).json({ message: "error fetching all the products", error : error });
   }
 };
 

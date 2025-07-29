@@ -157,7 +157,7 @@ const createProduct = async (req, res) => {
       description,
     });
 
-    const populatedProduct = await Product.findById(product._id).populate("createdBy" , "shopName")
+    const populatedProduct = await Product.findById(product._id).populate("createdBy" , "shopName").populate("category" , "name")
 
 
     return res.status(201).json({

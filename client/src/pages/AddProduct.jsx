@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { baseURL } from '@/BaseUrl';
 import { IoIosArrowDropdown } from "react-icons/io";
 import toast , {Toaster} from 'react-hot-toast';
+import VendorProduct from '@/components/VendorProduct';
 
 
 
@@ -10,6 +11,8 @@ function AddProduct() {
   
   const [data , setData] = useState();
   const [showDropDown , setShowDropDown] = useState(false);
+  const [dataResult , setDataResult] = useState()
+  const [loading , setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name :'',
     unit :'',
@@ -41,6 +44,7 @@ function AddProduct() {
     formDataToSend.append("images" , formData.images);
     formDataToSend.append("categoryName" , formData.category)
     console.log(formData.name , formData.images)
+    if(loading) return <h1>Adding Product Please Wait</h1>
     try{
       const result = await fetch(`${baseURL}api/create-product`,{
         method : 'POST',
@@ -48,8 +52,9 @@ function AddProduct() {
         body : formDataToSend
       })
       const data = await result.json();
-      console.log("response" , data.data)
-      if(data){
+     setDataResult(data.data);
+      console.log("response" , data)
+      if(data.success){
         toast.success(data.message);
         setFormData({
             name :'',
@@ -62,9 +67,13 @@ function AddProduct() {
             category :''
         })
       }
+      else {
+        toast.error(data.message)
+      }
     }
     catch(err){
       console.log(err.createdBy)
+      toast.error(err)
     }
 
   }
@@ -98,7 +107,8 @@ function AddProduct() {
     <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
     <h1>Hi Vendor , Please Add Your Product</h1>
 
-   <form onSubmit={handleSubmit} className='ml-[400px] mt-[100px]'>
+    <div className='flex gap-x-[24px]'>
+        <form onSubmit={handleSubmit} className='ml-[400px] mt-[100px]'>
     <div className='flex flex-col gap-y-[4px] mt-[90px]'>
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='name' placeholder='name' value={formData.name} onChange={handleClick}></input>
@@ -115,15 +125,15 @@ function AddProduct() {
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='description' placeholder='description' value={formData.description} onChange={handleClick}></input>
       </div>
-     <div className="inline-block">
+     <div >
       
-      <div> <button
+      <div> <div
         onClick={toggleDropDown}
         className='flex items-center justify-between font-grey-100 border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer w-[290px]'
       >
         <span>Category</span>
         <IoIosArrowDropdown className='text-xl' />
-      </button></div>
+      </div></div>
 
    {showDropDown && (
   <div className="absolute mt-2 space-y-2">
@@ -157,6 +167,7 @@ function AddProduct() {
     id="images"
     name="images"
     accept="image/*"
+    multiple
     onChange={handleClick}
     style={{ display: 'none' }} // hides default input
   />
@@ -168,6 +179,22 @@ function AddProduct() {
      
     </div>
    </form>
+ {
+  dataResult && <VendorProduct 
+  name={dataResult.name} 
+  unit={dataResult.unit}
+  stock={dataResult.stock}
+  discount={dataResult.disocunt}
+  description={dataResult.description}
+  category={dataResult.category.name}
+  images={dataResult.image}
+  createdBy={dataResult.createdBy.shopName}
+  />
+ }
+    </div>
+
+   
+   
     
     </div>
     

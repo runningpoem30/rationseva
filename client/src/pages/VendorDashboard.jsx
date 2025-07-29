@@ -1,9 +1,11 @@
 import React from 'react'
+import VendorProduct from '@/components/VendorProduct'
 
 function VendorDashboard() {
   return (
     <div>
-      This is Vendor Dashboard
+      
+      <VendorProduct/>
     </div>
   )
 }

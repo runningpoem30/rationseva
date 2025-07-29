@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { baseURL } from '@/BaseUrl';
 import { IoIosArrowDropdown } from "react-icons/io";
+import toast , {Toaster} from 'react-hot-toast';
 
 
 
@@ -46,11 +47,24 @@ function AddProduct() {
         credentials : 'include',
         body : formDataToSend
       })
-       const data = await result.json();
-      console.log("response" , data)
+      const data = await result.json();
+      console.log("response" , data.data)
+      if(data){
+        toast.success(data.message);
+        setFormData({
+            name :'',
+            unit :'',
+            stock : '',
+            discount :'',
+            description :'',
+            createdBy :'',
+            images :'',
+            category :''
+        })
+      }
     }
     catch(err){
-      console.log(err)
+      console.log(err.createdBy)
     }
 
   }
@@ -78,12 +92,13 @@ function AddProduct() {
 
   return (
     <div>
+      <Toaster position='top-center'/>
 
     <span className='text-5xl font-bold text-[#F8CB46]'>Ration</span>
     <span className='text-5xl font-bold text-[#54B226]'>Seva</span>
     <h1>Hi Vendor , Please Add Your Product</h1>
 
-   <form onSubmit={handleSubmit}>
+   <form onSubmit={handleSubmit} className='ml-[400px] mt-[100px]'>
     <div className='flex flex-col gap-y-[4px] mt-[90px]'>
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='name' placeholder='name' value={formData.name} onChange={handleClick}></input>

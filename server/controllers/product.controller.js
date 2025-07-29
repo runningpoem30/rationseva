@@ -157,11 +157,14 @@ const createProduct = async (req, res) => {
       description,
     });
 
+    const populatedProduct = await Product.findById(product._id).populate("createdBy" , "shopName")
+
+
     return res.status(201).json({
       success: true,
       error: false,
       message: "Product Successfully created",
-      product,
+      data : populatedProduct,
     });
   } catch (error) {
     return res.status(500).json({

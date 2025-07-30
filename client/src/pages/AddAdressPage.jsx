@@ -22,9 +22,7 @@ function AddAdressPage() {
 const [role , setRole] = useState();
 const navigate = useNavigate()
 
-function goToHome(){
-  navigate('/home')
-}
+
  
    async function getCookie(){
     try{
@@ -39,6 +37,10 @@ function goToHome(){
         }
    }
    console.log(role)
+
+function goToHome(){
+    role === 'vendor' ? navigate('/vendor-dashboard') : navigate('/home')
+}
 
 
    useEffect(() => {

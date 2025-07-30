@@ -26,7 +26,7 @@ function App() {
       <Route path='/home' element={<HomePage/>}/>
       <Route path='/vendor-signup' element={<VendorSignup/>}/>
       <Route path='/api/vendor/verify/:userId/:token' element={<VendorVerified/>}/>
-      <Route path='/vendor/add-product' element={<AddProduct/>}/>
+      <Route path='/vendor/add-products' element={<AddProduct/>}/>
       <Route path='/vendor-login' element={<VendorLoginPage/>}/>
       <Route path='/vendor-dashboard' element={<VendorDashboard/>}/>
       <Route path='/add-address' element={<AddAdressPage/>}/>

@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { jwtDecode } from 'jwt-decode'
+import { baseURL } from '@/BaseUrl';
 
 
 function AddAdressPage() {
@@ -10,13 +12,52 @@ function AddAdressPage() {
         mobile : ""
     })
 
-   async function handleSubmit(){
+   
+ 
+        const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('accessToken='))
+        ?.split('=')[1];
 
+        let role;
+        if (token) {
+        const decoded = jwtDecode(token);
+        role = decoded.role; // 'user' or 'vendor'
+        }
+        console.log(token)
+
+
+   async function handleSubmit(event){
+        event.preventDefault()
+        const endpoint = role === 'vendor' ? `${baseURL}api/vendor/add-address` : `${baseURL}api/user/add-address`
+        try{
+
+             const res = await fetch(endpoint , {
+              method : 'POST',
+              headers : {
+                "Content-Type" : "application/json",
+                 "Authorization": `Bearer ${token}`
+              },
+              body : JSON.stringify(formData),
+              credentials : 'include'
+             })
+
+        }
+        catch(error){
+            console.log(error)
+        }
     }
 
-    async function handleClick(){
-
+    function handleClick(event){
+        setFormData({
+            ...formData,
+            [event.target.name] : event.target.value
+        })
     }
+
+    console.log(formData)
+     
+
   return (
     <div>
         <div>

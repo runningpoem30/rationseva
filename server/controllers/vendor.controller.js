@@ -28,6 +28,7 @@ const createVendor = async (req, res) => {
       shopName: shopName,
       email: email,
       password: hashedPassword,
+      role : 'vendor'
     });
     newVendor.save();
 
@@ -112,13 +113,13 @@ const loginVendor = async (req, res) => {
     }
 
     const accessToken = jwt.sign(
-      { vendorId: findVendor._id },
+      { vendorId: findVendor._id , role : findVendor.role },
       process.env.ACCESS_TOKEN_KEY,
       { expiresIn: "60m" }
     );
 
     const refreshToken = jwt.sign(
-      { vendorId: findVendor._id },
+      { vendorId: findVendor._id , role : findVendor.role},
       process.env.REFRESH_TOKEN_KEY,
       { expiresIn: "7d" }
     );

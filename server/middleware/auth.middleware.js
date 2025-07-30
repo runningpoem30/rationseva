@@ -17,8 +17,9 @@ const auth = async (req , res, next) => {
       return res.status(400).json({ message : "unauthorized access"})
     }
 
+
     req.id = decode.userId; 
-    req.role = 'user'
+    req.role = decode.role
     next()
 
   }
@@ -40,9 +41,10 @@ const vendorAuth = async(req, res , next) => {
     if(!decode){
       return res.status(400).json({message : "unauthorized access"})
     }
+        console.log(decode.role)
 
     req.vendorId = decode.vendorId;
-    req.role = 'vendor'
+    req.role = decode.role
     next()
 
   }

@@ -29,7 +29,9 @@ function VendorSignup() {
             const  res = await fetch('http://localhost:8000/api/vendor/create-vendor' , {
                 method : "POST",
                 body : JSON.stringify(formData),
-                
+                 headers: {
+       "Content-Type": "application/json"
+     },
             })
 
             const result = await res.json()

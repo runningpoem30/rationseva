@@ -7,10 +7,14 @@ const {geoCodeAddress} = require("../util/geoCodeAddress")
 
 const addAddress = async (req , res) => {
   try {   
-    const {id , role } = req;
-    if(!id || !role){
-      return res.status(401).json({message : "unauthorized"})
-    }
+    const id = req?.userId || req?.vendorId;
+    console.log(id)
+    const role = req.role;
+ 
+   if (!id || !role) {
+     return res.status(401).json({ message: "Unauthorized" });
+   }
+
 
      const {addressLine , city , state , pincode, mobile } = req.body;
      console.log(req.body)
@@ -26,13 +30,14 @@ const addAddress = async (req , res) => {
      console.log(longitude , latitude)
 
      const address = new Address({addressLine , city , state , pincode , mobile , [role] : id , coordinates : coordinates})
-     address.save()
+     await address.save()
 
      const ownerModel = role === 'user' ? User : Vendor
      console.log(ownerModel)
 
      await ownerModel.findByIdAndUpdate(id , {$push : {addresses : address._id}})
-     const findVendor = await Vendor.findById(id).populate('addresses')
+
+     //const findVendor = await Vendor.findById(id).populate('addresses')
      console.log(findVendor)
      return res.status(200).json({
       success : true , 

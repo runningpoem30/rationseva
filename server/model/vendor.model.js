@@ -42,6 +42,9 @@ const vendorSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId ,
     ref : 'Address',
   }],
+  role : {
+    type : String,
+  },
   verify_email : {
     type : Boolean ,
     default : false

@@ -8,8 +8,8 @@ const {
   deleteProduct,
   viewAllVendorProducts,
   viewAllProducts,
-  getProduct,
   getAllCategories,
+  getOneSingleProduct
 } = require("../controllers/product.controller");
 const { Product } = require("../model/product.model");
 
@@ -28,6 +28,7 @@ ProductRoute.put(
   updateProduct
 );
 ProductRoute.post("/:productId/delete-product", vendorAuth, deleteProduct);
-ProductRoute.get("/get-all-categories" , getAllCategories)
+ProductRoute.get("/get-all-categories" , getAllCategories);
+ProductRoute.get("/product/:id" , getOneSingleProduct);
 
 module.exports = ProductRoute;

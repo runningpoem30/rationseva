@@ -36,8 +36,9 @@ const addAddress = async (req , res) => {
 
      await ownerModel.findByIdAndUpdate(id , {$push : {addresses : address._id}})
 
-     //const findVendor = await Vendor.findById(id).populate('addresses')
-     //console.log(findVendor)
+     const findVendor = await Vendor.findById(id).populate('addresses')
+     console.log(findVendor)
+     
      return res.status(200).json({
       success : true , 
       message : 'Saved Address Successfully',

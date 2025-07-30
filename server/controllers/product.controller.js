@@ -6,6 +6,8 @@ const { Subcategory } = require("../model/subcategory.model");
 const { uploadToCloudinary } = require("../util/cloudinary");
 const mongoose = require("mongoose");
 const { Address } = require("../model/address.model");
+const { error } = require("console");
+
 
 //specific to a vendor - all the products which has been added only by him
 const viewAllVendorProducts = async (req, res) => {
@@ -30,7 +32,7 @@ const viewAllVendorProducts = async (req, res) => {
 //everyone can view - vendor and users both
 const viewAllProducts = async (req, res) => {
   try {
-    const { category, subCategory, lat, lng } = req.query;
+    const { category, lat, lng , name } = req.query;
     const query = {};
 
     if (category) {
@@ -40,15 +42,10 @@ const viewAllProducts = async (req, res) => {
       }
       query.category = categoryDoc._id;
     }
-
-    if (subCategory) {
-      const subCategoryDoc = await Subcategory.findOne({ name: subCategory });
-      if (!subCategoryDoc) {
-        return res.status(200).send({ message: "no subcategory found" });
-      }
-      query.subCategory = subCategoryDoc._id;
+    if(name){
+      query.name = { $regex: name, $options: "i" };
     }
-
+ 
     let nearByAddress = [];
     if (lat && lng) {
       nearByAddress = await Address.find({
@@ -77,7 +74,7 @@ const viewAllProducts = async (req, res) => {
     const findProduct = await Product.find(query)
       .populate("createdBy", "shopName")
       .populate("category", "name")
-      .populate("subCategory", "name");
+
 
     return res.json(findProduct);
 
@@ -91,6 +88,28 @@ const viewAllProducts = async (req, res) => {
     return res.status(500).json({ message: "error fetching all the products" });
   }
 };
+
+const getOneSingleProduct = async(req ,res) => {
+  try{
+       const {id} = req.params;
+
+       const product = await Product.findById(id);
+       
+       res.status(200).json({
+        success : true,
+        error : false,
+        data : product
+       })
+    
+  }
+  catch{
+      res.status(400).json({
+        error : true,
+        message : "error fetching product"
+
+      })
+  }
+}
 
 const getAllCategories = async(req ,res ) =>{
   try{
@@ -106,8 +125,6 @@ const getAllCategories = async(req ,res ) =>{
     console.log(error)
   }
 }
-
-
 
 const createProduct = async (req, res) => {
   try {
@@ -332,5 +349,6 @@ module.exports = {
   deleteProduct,
   viewAllVendorProducts,
   viewAllProducts,
-  getAllCategories
+  getAllCategories,
+  getOneSingleProduct
 };

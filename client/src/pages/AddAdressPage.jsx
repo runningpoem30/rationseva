@@ -155,7 +155,5 @@ export default AddAdressPage
 
 
 
-//GOOGLE CLOUDE API =AIzaSyCt_LrEzpCy-cqn1hBmD_3wJxd5LdF6A-g
-//AIzaSyCt_LrEzpCy-cqn1hBmD_3wJxd5LdF6A-g
 
 

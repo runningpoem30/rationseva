@@ -7,8 +7,8 @@ const {geoCodeAddress} = require("../util/geoCodeAddress")
 
 const addAddress = async (req , res) => {
   try {   
-    const id = req.vendorId || req.userId;
-    //console.log(id)
+    const id = req.vendorId || req.id;
+    console.log(id)
     const role = req.role;
  
    if (!id || !role) {

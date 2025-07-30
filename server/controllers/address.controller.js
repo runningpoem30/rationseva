@@ -7,8 +7,8 @@ const {geoCodeAddress} = require("../util/geoCodeAddress")
 
 const addAddress = async (req , res) => {
   try {   
-    const id = req?.userId || req?.vendorId;
-    console.log(id)
+    const id = req.vendorId || req.userId;
+    //console.log(id)
     const role = req.role;
  
    if (!id || !role) {
@@ -17,7 +17,7 @@ const addAddress = async (req , res) => {
 
 
      const {addressLine , city , state , pincode, mobile } = req.body;
-     console.log(req.body)
+     //console.log(req.body)
 
     const coordinates = await geoCodeAddress(`${addressLine} , ${city}  , ${state} , ${pincode}`)
     console.log(coordinates)
@@ -27,7 +27,6 @@ const addAddress = async (req , res) => {
        return res.status(400).json({message : "Please enter all the required fields"})
      }
 
-     console.log(longitude , latitude)
 
      const address = new Address({addressLine , city , state , pincode , mobile , [role] : id , coordinates : coordinates})
      await address.save()
@@ -38,7 +37,7 @@ const addAddress = async (req , res) => {
      await ownerModel.findByIdAndUpdate(id , {$push : {addresses : address._id}})
 
      //const findVendor = await Vendor.findById(id).populate('addresses')
-     console.log(findVendor)
+     //console.log(findVendor)
      return res.status(200).json({
       success : true , 
       message : 'Saved Address Successfully',
@@ -46,9 +45,11 @@ const addAddress = async (req , res) => {
      })
   }
   catch(error){
+    console.log(error)
     res.status(400).json({
-      error : true , 
+      error : error , 
       message : 'failed adding address'
+
     })
   }
 }

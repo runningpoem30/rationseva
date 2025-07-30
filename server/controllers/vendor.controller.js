@@ -149,6 +149,7 @@ const loginVendor = async (req, res) => {
     });
   }
 };
+
 const logoutVendor = async (req, res) => {
   try {
     const cookieOption = {

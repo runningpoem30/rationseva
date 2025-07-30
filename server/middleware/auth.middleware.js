@@ -16,6 +16,7 @@ const auth = async (req , res, next) => {
     if(!decode) {
       return res.status(400).json({ message : "unauthorized access"})
     }
+    console.log(decode.role)
 
 
     req.id = decode.userId; 
@@ -36,12 +37,11 @@ const vendorAuth = async(req, res , next) => {
     }
 
     const decode = await jwt.verify(token , process.env.ACCESS_TOKEN_KEY)
-    console.log(decode)
+    console.log(decode.role)
 
     if(!decode){
-      return res.status(400).json({message : "unauthorized access"})
+      return res.status(400).json({message : "middleware unauthorized access"})
     }
-        console.log(decode.role)
 
     req.vendorId = decode.vendorId;
     req.role = decode.role

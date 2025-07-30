@@ -12,6 +12,8 @@ function AddAdressPage() {
         mobile : ""
     })
 
+    const getCookie = document.cookie
+    console.log(getCookie);
    
  
         const token = document.cookie
@@ -32,11 +34,10 @@ function AddAdressPage() {
         const endpoint = role === 'vendor' ? `${baseURL}api/vendor/add-address` : `${baseURL}api/user/add-address`
         try{
 
-             const res = await fetch(endpoint , {
+             const res = await fetch(`${baseURL}api/vendor/add-address` , {
               method : 'POST',
               headers : {
                 "Content-Type" : "application/json",
-                 "Authorization": `Bearer ${token}`
               },
               body : JSON.stringify(formData),
               credentials : 'include'
@@ -55,7 +56,7 @@ function AddAdressPage() {
         })
     }
 
-    console.log(formData)
+    
      
 
   return (

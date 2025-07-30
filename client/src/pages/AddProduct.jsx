@@ -19,7 +19,7 @@ function AddProduct() {
     stock : '',
     discount :'',
     description :'',
-    createdBy :'',
+    price : '',
     images :'',
     category :''
   })
@@ -112,6 +112,9 @@ function AddProduct() {
     <div className='flex flex-col gap-y-[4px] mt-[90px]'>
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='name' placeholder='name' value={formData.name} onChange={handleClick}></input>
+      </div>
+      <div>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='price' placeholder='price' value={formData.price} onChange={handleClick}></input>
       </div>
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name='unit' placeholder='unit' value={formData.unit} onChange={handleClick}></input>

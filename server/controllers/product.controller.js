@@ -154,6 +154,7 @@ const createProduct = async (req, res) => {
       stock,
       discount,
       description,
+      price
     } = req.body;
 
     const [categoryExists, subCategoryExists] = await Promise.all([
@@ -175,6 +176,7 @@ const createProduct = async (req, res) => {
       stock,
       discount,
       description,
+      price
     });
 
     const populatedProduct = await Product.findById(product._id).populate("createdBy" , "shopName").populate("category" , "name")

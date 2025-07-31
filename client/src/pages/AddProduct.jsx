@@ -84,6 +84,8 @@ function AddProduct() {
 
   }
 
+console.log(dataResult)
+
   function toggleDropDown(){
       setShowDropDown((prev) => !prev);
   }
@@ -120,7 +122,7 @@ function AddProduct() {
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='name' placeholder='name' value={formData.name} onChange={handleClick}></input>
       </div>
       <div>
-        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='price' placeholder='price' value={formData.price} onChange={handleClick}></input>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='price' placeholder='price' value={formData.price} type="number" onChange={handleClick}></input>
       </div>
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name='unit' placeholder='unit' value={formData.unit} onChange={handleClick}></input>
@@ -199,6 +201,7 @@ function AddProduct() {
   category={dataResult.category.name}
   images={dataResult.image}
   createdBy={dataResult.createdBy.shopName}
+  price={dataResult.price}
   />
  }
     </div>

@@ -77,10 +77,7 @@ databaseConnect()
 // }
 
 // {
-//   "name" : "akshat",
-//   "email":"checktt@gmail.com",
-//   "password":"arya"
-// }
+
 // {
 //   "name" : "arya",
 //   "email" : "arya12@gmail.com",

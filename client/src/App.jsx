@@ -13,6 +13,7 @@ import VendorLoginPage from './pages/VendorLoginPage'
 import VendorDashboard from './pages/VendorDashboard'
 import AddAdressPage from './pages/AddAdressPage'
 import GoToCategory from './pages/GoToCategory'
+import SingleProduct from './components/SingleProduct'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
       <Route path='/vendor-dashboard' element={<VendorDashboard/>}/>
       <Route path='/add-address' element={<AddAdressPage/>}/>
       <Route path='/category' element={<GoToCategory/>}/>
+      <Route path='/single-product' element={<SingleProduct/>}/>
     </Routes>
  
    

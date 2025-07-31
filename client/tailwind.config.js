@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'], // ✅ Added consistent font
+        okra: ['sans-serif'], // ✅ Added consistent font
       },
       borderRadius: {
         lg: 'var(--radius)',

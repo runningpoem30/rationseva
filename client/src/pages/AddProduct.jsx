@@ -70,7 +70,8 @@ function AddProduct() {
             description :'',
             createdBy :'',
             images :'',
-            category :''
+            category :'',
+            price : ''
         })
       }
       else {

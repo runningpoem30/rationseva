@@ -33,13 +33,14 @@ function VendorDashboard() {
       <VendorProduct
         key={item._id}
         name={item.name}
-        images={item.image}
+        images={item.image?.[0]}
         discount={item.discount}
         description={item.description}
         stock={item.stock}
         unit={item.unit}
         createdBy={item.createdBy.shopName}
         category={item.category?.name}
+        price={item.price}
       />
     ))
   }

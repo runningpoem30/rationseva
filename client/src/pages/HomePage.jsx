@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '@/components/Header'
 import { baseURL } from '@/BaseUrl'
+import { Link } from 'react-router-dom';
 function HomePage() {
 
   const [categoryData , setCategoryData] = useState();
@@ -34,7 +35,7 @@ function HomePage() {
       <div >
         <img src='https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=2160/layout-engine/2022-05/Group-33704.jpg' className='w-[1500px] h-[250px]'/>
       </div>
-      <div className='flex flex-wrap w-max gap-6 ml-[15px]'>
+      <div className='flex flex-wrap w-max gap-6 ml-[16px]'>
         <img src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-07/pharmacy-WEB.jpg" className="w-[335px] h-[195px] "></img>
         <img src="https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-07/Pet-Care_WEB.jpg" className="w-[335px] h-[195px] "></img>
         <img src='https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=720/layout-engine/2023-03/babycare-WEB.jpg' className="w-[335px] h-[195px] "></img>
@@ -43,7 +44,7 @@ function HomePage() {
        <div className='flex flex-wrap gap-4'>
         {
           categoryData && categoryData.length >0 ?  
-           categoryData.map((item) => <div className="w-[128px] h-[188px]"><img src={item.image} className='w-full h-full object-cover rounded-md shadow-md' /></div>)
+           categoryData.map((item) => <Link to={`/category?category=${item.name}`}><div className="w-[128px] h-[188px]"><img src={item.image} className='w-full h-full object-cover rounded-md shadow-md' /></div></Link>)
       : null }
       </div>
       </div>

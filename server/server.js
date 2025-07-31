@@ -75,5 +75,9 @@ databaseConnect()
 //   "password" : "1234"
 // }
 
+// birthday se pehle dhamaka krna hai 
+// i will crack a fucking 50,000 ki internship 
+// in startup , remote based company 
+// i will become a fucking beast , and here marks my 250th commit of this year
 
 

@@ -42,6 +42,7 @@ function AddProduct() {
     formDataToSend.append("description" , formData.description)
     formDataToSend.append("discount" , formData.discount);
     formDataToSend.append("images" , formData.images);
+    formDataToSend.append("price" , formData.price);
     formDataToSend.append("categoryName" , formData.category)
     console.log(formData.name , formData.images)
     if(loading) return <h1>Adding Product Please Wait</h1>

@@ -48,7 +48,7 @@ function GoToCategory() {
      <div className='grid grid-cols-6  gap-y-[10px] mt-[5px]'>
       {dataFromApi?.length > 0 ? (
         dataFromApi.map((item) => (
-            <Link to={`/product/:${item._id}`}>
+            <Link to={`/product/${item._id}`}>
             <div className='ml-[9px]'><SingleProduct name={item.name} price={item.price}  unit={item.unit} image={item.image[0][0]}/></div></Link>
         ))
       ) : (

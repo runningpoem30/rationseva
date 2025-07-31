@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Header from '@/components/Header'
 import { baseURL } from '@/BaseUrl'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';  
+import CategoryOnHomePage from './CategoryOnHomePage';
+
 function HomePage() {
 
   const [categoryData , setCategoryData] = useState();

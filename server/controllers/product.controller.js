@@ -92,15 +92,13 @@ const viewAllProducts = async (req, res) => {
 const getOneSingleProduct = async(req ,res) => {
   try{
        const {id} = req.params;
-
        const product = await Product.findById(id);
        
        res.status(200).json({
         success : true,
         error : false,
         data : product
-       })
-    
+       })  
   }
   catch{
       res.status(400).json({

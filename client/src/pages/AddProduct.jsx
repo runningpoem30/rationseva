@@ -83,8 +83,8 @@ function AddProduct() {
     }
 
   }
-
-console.log(dataResult)
+const imageArray = dataResult?.image[0]
+console.log(imageArray?.[0])
 
   function toggleDropDown(){
       setShowDropDown((prev) => !prev);
@@ -122,7 +122,7 @@ console.log(dataResult)
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='name' placeholder='name' value={formData.name} onChange={handleClick}></input>
       </div>
       <div>
-        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='price' placeholder='price' value={formData.price} type="number" onChange={handleClick}></input>
+        <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='price' placeholder='price' value={formData.price} onChange={handleClick}></input>
       </div>
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]'name='unit' placeholder='unit' value={formData.unit} onChange={handleClick}></input>
@@ -199,7 +199,7 @@ console.log(dataResult)
   discount={dataResult.disocunt}
   description={dataResult.description}
   category={dataResult.category.name}
-  images={dataResult.image}
+  images={dataResult.image?.[0]}
   createdBy={dataResult.createdBy.shopName}
   price={dataResult.price}
   />

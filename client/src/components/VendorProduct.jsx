@@ -1,10 +1,9 @@
 import React from 'react'
 
 
-function VendorProduct({name, unit , stock , discount , description , category, images, price , createdBy}) 
+function VendorProduct({name, unit , stock , discount , description , category, images=[], price , createdBy}) 
 {
-
-    
+ console.log(images)
   return (
     <div className=''>
       <div className='bg-black-500 shadow-md rounded-lg p-4 w-[400px]'>
@@ -12,7 +11,7 @@ function VendorProduct({name, unit , stock , discount , description , category, 
         <h1 className='w-[100px]' className='text-4xl font-bold text-[#54B226]'>{name}</h1>
               </div>
       <div className=' border  rounded-[10px]'> 
-         <img src={images} className='' />
+         <img src={images?.[0]} className='' />
      </div> 
      <div>
       <h1>Price : {price}</h1>

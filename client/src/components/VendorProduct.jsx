@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-function VendorProduct({name, unit , stock , discount , description , category, images , createdBy}) 
+function VendorProduct({name, unit , stock , discount , description , category, images, price , createdBy}) 
 {
 
     
@@ -15,7 +15,8 @@ function VendorProduct({name, unit , stock , discount , description , category, 
          <img src={images} className='' />
      </div> 
      <div>
-      <h1>Price : {unit}</h1>
+      <h1>Price : {price}</h1>
+      <h1>Unit : {unit}</h1>
       <h1>Discount : {discount}</h1>
       <h1>Description : {description}</h1>
       <h1>Category : {category}</h1>

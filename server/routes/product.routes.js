@@ -18,7 +18,7 @@ ProductRoute.get("/view-all-vendor-products", vendorAuth, viewAllVendorProducts)
 ProductRoute.post(
   "/create-product",
   vendorAuth,
-  upload.array("images"),
+  upload.array("images" , 5),
   createProduct
 );
 ProductRoute.put(

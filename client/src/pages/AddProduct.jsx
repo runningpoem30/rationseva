@@ -29,7 +29,7 @@ function AddProduct() {
 
    setFormData({
     ...formData,
-    [name] : type === 'file' ? files[0] : value
+    [name] : type === 'file' ? Array.from(files) : value
    })
   }
 
@@ -41,7 +41,12 @@ function AddProduct() {
     formDataToSend.append("stock" , formData.stock);
     formDataToSend.append("description" , formData.description)
     formDataToSend.append("discount" , formData.discount);
-    formDataToSend.append("images" , formData.images);
+
+   if (formData.images && Array.isArray(formData.images)){
+    formData.images.forEach((image) => {
+      formDataToSend.append("images" , image)
+    })
+   }
     formDataToSend.append("price" , formData.price);
     formDataToSend.append("categoryName" , formData.category)
     console.log(formData.name , formData.images)
@@ -129,7 +134,7 @@ function AddProduct() {
       <div>
         <input className='border border-gray-300 p-[15px] rounded-2xl bg-gray-100 pr-[100px]' name='description' placeholder='description' value={formData.description} onChange={handleClick}></input>
       </div>
-     <div >
+     <div>
       
       <div> <div
         onClick={toggleDropDown}
@@ -161,6 +166,7 @@ function AddProduct() {
   <div>
   <label 
     htmlFor="images"
+  
     className="border border-gray-300 py-[12px] px-4 rounded-2xl bg-gray-100 cursor-pointer inline-block w-[290px]"
   >
     Add Images
@@ -196,10 +202,6 @@ function AddProduct() {
   />
  }
     </div>
-
-   
-   
-    
     </div>
     
   )

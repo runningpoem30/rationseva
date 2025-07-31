@@ -45,7 +45,6 @@ app.get('/api/whoami' , async (req , res) => {
     res.status(400).json({role : null})
   }
 
-
 })
 app.get('/' , (req, res) => {
   res.send("hi there")
@@ -67,19 +66,14 @@ databaseConnect()
 //   "password" : "123456"
 // }
 
-// {
-//   "addressLine": "Tech Park, Building 5",
-//   "city": "Bangalore",
-//   "state": "Karnataka",
-//   "pincode": "560001",
-//   "mobile": "9123456780",
-//   "type": "business"
-// }
 
-// {
+
 
 // {
 //   "name" : "arya",
 //   "email" : "arya12@gmail.com",
 //   "password" : "1234"
 // }
+
+
+

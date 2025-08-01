@@ -1,4 +1,5 @@
 import React from 'react'
+import ButtonInsideTheProductCard from './ButtonInsideTheProductCard'
 
 function SingleProduct({name, unit , price , image}) {
   return (
@@ -19,9 +20,7 @@ function SingleProduct({name, unit , price , image}) {
   </div>
 
   <div>
-    <button className="text-[#318616] border border-[#318616] rounded-[5px] px-4 py-1 text-sm font-medium">
-      ADD
-    </button>
+    <ButtonInsideTheProductCard/>
   </div>
 </div>
 

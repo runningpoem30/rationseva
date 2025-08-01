@@ -3,6 +3,7 @@ import Header from '@/components/Header'
 import { baseURL } from '@/BaseUrl'
 import { Link } from 'react-router-dom';  
 import CategoryOnHomePage from './CategoryOnHomePage';
+import Footer from '@/components/Footer';
 
 function HomePage() {
 
@@ -52,6 +53,9 @@ function HomePage() {
       </div>
       <div className='mr-[50px]'>
         <CategoryOnHomePage/>
+      </div>
+      <div className='mt-[20px]'>
+        <Footer/>
       </div>
       
       </div>

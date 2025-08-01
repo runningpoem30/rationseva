@@ -37,8 +37,14 @@ const addProductToCart = async(req ,res) => {
     if(existingItem){
       existingItem.quantity += qty
     }
+    if (existingItem.quantity <= 0) {
+    cart.items = cart.items.filter(item => item.productId.toString() !== productId);
+  }
     else{
-      cart.items.push({productId , quantity})
+      if( qty > 0){
+          cart.items.push({productId , quantity})
+      }
+    
     }
 
     await cart.save()
@@ -60,8 +66,31 @@ const addProductToCart = async(req ,res) => {
   }
 }
 
+const getCart = async(req , res) => {
+  try{
 
+    const userId = req.id;
+    if(!userId){
+      return res.status(400).json({message : "user not found"})
+    }
+
+    const cart = await Cart.findOne({userId})
+    return res.status(200).json({
+      success : true , 
+      error : false ,
+      data : cart
+    })
+  }
+  catch(err){
+    res.status(200).json({
+      success : false, 
+      error : true,
+      message : "error fetching detail"
+    })
+  }
+}
  
 module.exports = {
   addProductToCart,
+  getCart
 };

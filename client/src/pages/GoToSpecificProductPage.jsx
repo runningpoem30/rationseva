@@ -3,6 +3,7 @@ import { data, useParams } from 'react-router-dom';
 import { baseURL } from '@/BaseUrl';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import AddToCart from '@/components/AddToCart';
 
 function GoToSpecificProductPage() {
   const [dataFromApi, setDataFromApi] = useState();
@@ -16,6 +17,9 @@ function GoToSpecificProductPage() {
     setDataFromApi(data.data);
     setSelectedImage(data.data.image[0][0]); // ⭐️ set the default main image
   }
+
+
+  console.log(dataFromApi)
 
   useEffect(() => {
     getProductDetails();
@@ -37,7 +41,7 @@ function GoToSpecificProductPage() {
             <img
               src={selectedImage}
               alt="Selected product"
-              className="w-[500px] h-[500px] object-cover border border-gray-300 rounded-xl mx-auto"
+              className="w-[700px] h-[500px] object-cover border border-gray-300 rounded-xl mx-auto"
             />
           </div>
         )}
@@ -63,8 +67,21 @@ function GoToSpecificProductPage() {
         <h1 className='text-black-700 font-extrabold text-[20px]'>{dataFromApi?.name}</h1>
       </div>
       <h1 className='text-[#696969]'>{dataFromApi?.unit}</h1>
-      <h1 className='mt-[20px]'>₹{dataFromApi?.price}</h1>
-      <p>(Inclusive of all taxes)</p>
+      <div className='flex gap-[500px] mt-[5px]'>
+             <h1 className='mt-[20px]'>₹{dataFromApi?.price}</h1>
+       <AddToCart productId={dataFromApi?._id}/>
+      </div>
+     
+      
+      
+      <div className='flex gap-[400px]'>
+          <p>(Inclusive of all taxes)</p>
+     
+      </div>
+      
+    
+
+      
       <div className='mt-[30px] w-[800px]'>
         <img src='https://i.ibb.co/rK68Nn9Z/Screenshot-2025-08-01-at-6-41-20-AM.png'></img>
       </div>

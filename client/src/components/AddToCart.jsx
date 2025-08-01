@@ -4,8 +4,6 @@ import { baseURL } from '@/BaseUrl';
 
 function AddToCart({ productId }) {
   const [quantity, setQuantity] = useState(0);
-
-  // Fetch cart items when component mounts
   useEffect(() => {
     async function fetchCart() {
       try {
@@ -15,8 +13,12 @@ function AddToCart({ productId }) {
         });
         const data = await res.json();
         if (data.success) {
-          const item = data.cart.items.find(item => item.productId._id === productId);
-          if (item) {
+         console.log(data?.items)
+         const item = data?.items.find((item) => {
+            const id = item?.productId?._id;
+            return id && id.toString() === productId.toString();
+            });
+     if (item) {
             setQuantity(item.quantity);
           }
         }

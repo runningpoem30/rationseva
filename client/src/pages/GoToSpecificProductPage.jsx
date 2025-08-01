@@ -19,7 +19,7 @@ function GoToSpecificProductPage() {
   }
 
 
-  console.log(dataFromApi)
+  //console.log(dataFromApi)
 
   useEffect(() => {
     getProductDetails();

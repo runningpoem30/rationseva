@@ -39,7 +39,7 @@ const navigate = useNavigate()
    console.log(role)
 
 function goToHome(){
-    role === 'vendor' ? navigate('/vendor-dashboard') : navigate('/home')
+    role === 'vendor' ? navigate('/vendor-dashboard') : navigate('/make-payment')
 }
 
 

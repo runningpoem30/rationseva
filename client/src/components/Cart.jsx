@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FiShoppingCart } from "react-icons/fi";
 import { baseURL } from "@/BaseUrl";
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Cart({ toggleCartSlider }) {
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
 
+
+  const navigate = useNavigate()
+
+  function goToCartSummary(){
+    navigate('/to-cart-page')
+  }
   useEffect(() => {
     async function fetchCart() {
       try {
@@ -36,7 +43,7 @@ function Cart({ toggleCartSlider }) {
   const isCartEmpty = totalItems === 0;
 
   return (
-    <div className="relative">
+    <div className="relative" onClick={goToCartSummary}>
       <button
         onClick={toggleCartSlider} // ⬅️ Trigger the slider
         className={`flex items-center px-4 py-2 rounded-[6px] shadow-md transition-all duration-200 min-w-[160px] text-white text-left ${

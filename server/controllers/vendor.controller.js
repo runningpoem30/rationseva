@@ -115,7 +115,7 @@ const loginVendor = async (req, res) => {
     const accessToken = jwt.sign(
       { vendorId: findVendor._id , role : findVendor.role },
       process.env.ACCESS_TOKEN_KEY,
-      { expiresIn: "60m" }
+      { expiresIn: "7d" }
     );
 
     const refreshToken = jwt.sign(

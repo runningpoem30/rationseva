@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes , Route } from 'react-router-dom'
+import { Routes , Route, useNavigate } from 'react-router-dom'
 import SignupPage from './pages/SignupPage'
 import CommonComponentLanding from './components/CommonComponentLanding'
 import LoginPage from './pages/LoginPage'
@@ -19,8 +19,12 @@ import CategoryWiseDataOnHomePage from './components/CategoryWiseDataOnHomePage'
 import CategoryOnHomePage from './pages/CategoryOnHomePage'
 import SearchPage from './pages/SearchPage'
 import Footer from './components/Footer'
+import CartPage from './pages/LeadToCartPage'
+import MakePayment from './pages/MakePayment'
+import { Navigate } from 'react-router-dom'
 
 function App() {
+
 
   return (
   
@@ -44,6 +48,9 @@ function App() {
       <Route path='/category-home-page' element={<CategoryOnHomePage/>}/>
       <Route path='/search-path' element={<SearchPage/>}/>
       <Route path='/footer' element={<Footer/>}/>
+      <Route path='/to-cart-page' element={<CartPage/>}/>
+      <Route path='/make-payment' element={<MakePayment/>}/>
+      <Route path="*" element={<Navigate to="/home" />} />
 
     </Routes>
  

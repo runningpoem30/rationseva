@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 function UserSection() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
   const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
@@ -11,11 +12,13 @@ function UserSection() {
       try {
         const res = await fetch('http://localhost:8000/api/whoami', {
           method: 'GET',
-          credentials: 'include'
+          credentials: 'include',
         });
 
         const data = await res.json();
-        if (data.role) {
+        console.log("whoami response:", data); // for debugging
+
+        if (res.ok && data?.role) {
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
@@ -23,6 +26,8 @@ function UserSection() {
       } catch (err) {
         console.error('Error checking login:', err);
         setIsLoggedIn(false);
+      } finally {
+        setIsChecking(false);
       }
     }
 
@@ -42,6 +47,10 @@ function UserSection() {
       console.error('Error fetching user details:', err);
     }
   };
+
+  if (isChecking) {
+    return null; // or return a spinner if you want
+  }
 
   if (!isLoggedIn) {
     return (

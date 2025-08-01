@@ -80,7 +80,7 @@ const loginUser = async (req, res) => {
     const accessToken = jwt.sign(
       { userId: findUser._id, role: findUser.role },
       process.env.ACCESS_TOKEN_KEY,
-      { expiresIn: "120m" }
+      { expiresIn: "7d" }
     );
 
     const refreshToken = jwt.sign(

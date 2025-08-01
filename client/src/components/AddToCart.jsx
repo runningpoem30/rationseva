@@ -16,7 +16,7 @@ function AddToCart({ productId }) {
          console.log(data?.items)
          const item = data?.items.find((item) => {
             const id = item?.productId?._id;
-            return id && id.toString() === productId.toString();
+            return id && id === productId;
             });
      if (item) {
             setQuantity(item.quantity);

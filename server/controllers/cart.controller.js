@@ -31,9 +31,11 @@ const addProductToCart = async(req ,res) => {
     }
 
     const existingItem = cart.items.find(item => item.productId.toString() === productId)
+
+    const qty = Number(quantity)
       
     if(existingItem){
-      existingItem.quantity += quantity
+      existingItem.quantity += qty
     }
     else{
       cart.items.push({productId , quantity})

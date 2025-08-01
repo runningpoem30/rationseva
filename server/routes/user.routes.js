@@ -9,6 +9,7 @@ const {
   updateUser,
   updateAvatar,
   refreshToken,
+  getUserDetails
 } = require("../controllers/user.controller");
 const { auth } = require("../middleware/auth.middleware");
 const { authRefresh } = require("../middleware/refreshToken.middleware");
@@ -22,5 +23,6 @@ userRouter.get("/verify/:id/:token", verifyUser);
 userRouter.put("/update-user", auth, updateUser);
 userRouter.put("/update-avatar", auth, upload.single("avatar"), updateAvatar);
 userRouter.post("/refresh-token", authRefresh, refreshToken);
+userRouter.get("/get-user-details" , auth , getUserDetails)
 
 module.exports = userRouter;

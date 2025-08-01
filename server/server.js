@@ -11,6 +11,7 @@ const productRoutes = require("./routes/product.routes");
 const adminRoutes = require("./routes/admin.routes");
 const cartRoutes = require("./routes/cart.routes");
 const addressRoutes = require("./routes/address.routes");
+const orderRoutes = require("./routes/order.routes")
 const cookieParser = require("cookie-parser");
 const User = require("./model/user.model");
 const jwt = require("jsonwebtoken")
@@ -30,6 +31,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/", productRoutes);
 app.use("/api/", addressRoutes);
 app.use("/api/", cartRoutes);
+app.use("/api" , orderRoutes)
 
 
 app.get('/api/whoami' , async (req , res) => {

@@ -289,6 +289,33 @@ const refreshToken = async (req, res) => {
   }
 };
 
+const getUserDetails = async (req , res) => {
+  try {
+      const userId = req.id;
+      if(!userId){
+        return res.status(200).json({message : "not authenticated"})
+      }
+
+
+      const user = await User.findById(userId);
+
+      return res.status(200).json({
+        success : true, 
+        error : false ,
+        data : user
+      })
+  }
+  catch(err){
+      res.status(400).json({
+         success : false ,
+        error : true ,
+        message : "error fetching the user details"
+      }
+       
+      )
+  }
+}
+
 module.exports = {
   signupUser,
   loginUser,
@@ -297,4 +324,5 @@ module.exports = {
   updateUser,
   updateAvatar,
   refreshToken,
+  getUserDetails
 };

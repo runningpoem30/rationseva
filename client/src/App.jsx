@@ -17,6 +17,7 @@ import SingleProduct from './components/SingleProduct'
 import GoToSpecificProductPage from './pages/GoToSpecificProductPage'
 import CategoryWiseDataOnHomePage from './components/CategoryWiseDataOnHomePage'
 import CategoryOnHomePage from './pages/CategoryOnHomePage'
+import SearchPage from './pages/SearchPage'
 
 function App() {
 
@@ -40,6 +41,8 @@ function App() {
       <Route path='/product/:productId' element={<GoToSpecificProductPage/>}/>
       <Route path='/category-wise' element={<CategoryWiseDataOnHomePage/>} />
       <Route path='/category-home-page' element={<CategoryOnHomePage/>}/>
+      <Route path='/search-path' element={<SearchPage/>}/>
+
     </Routes>
  
    

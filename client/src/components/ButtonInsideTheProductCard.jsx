@@ -1,33 +1,86 @@
-import React, { useEffect } from 'react'
-import { baseURL } from '@/BaseUrl'
+import React, { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { baseURL } from '@/BaseUrl';
 
-function ButtonInsideTheProductCard({productId}) {
+function ButtonInsideTheProductCard({ productId }) {
+  const [quantity, setQuantity] = useState(0);
 
-    async function getTheCardDetails(){
-        try{
-            const res = await fetch(`${baseURL}api/get-cart`,{
-                method : 'GET',
-                credentials : 'include'
-            })
-            const data = await res.json()
-            console.log(data)
+  useEffect(() => {
+    async function fetchCart() {
+      try {
+        const res = await fetch(`${baseURL}api/get-cart`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+        const data = await res.json();
+        if (data.success) {
+          const item = data.items.find(
+            (item) => item?.productId?._id === productId
+          );
+          if (item) {
+            setQuantity(item.quantity);
+          }
         }
-        catch(err){
-            console.log(err)
-        }
+      } catch (err) {
+        console.log(err);
+      }
     }
+    fetchCart();
+  }, [productId]);
 
-    useEffect(() => {
-        getTheCardDetails()
-    }, [])
+  async function updateCart(change) {
+    try {
+      const res = await fetch(`${baseURL}api/add-items-to-cart`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          productId,
+          quantity: change,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setQuantity((prev) => prev + change);
+      } else {
+        toast.error(data.message || 'Error updating cart');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
-    <div>
-    <button className="text-[#318616] border border-[#318616] rounded-[5px] px-4 py-1 text-sm font-medium">
+    <div className="mt-2 w-full flex justify-center">
+  <Toaster position="top-center" />
+
+  {quantity === 0 ? (
+    <button
+      onClick={() => updateCart(1)}
+      className="text-[#318616] border border-[#318616] rounded px-4 py-[2px] text-sm font-semibold w-[70px] h-[30px] flex items-center justify-center"
+    >
       ADD
     </button>
+  ) : (
+    <div className="text-[#318616] border border-[#318616] rounded w-[70px] h-[30px] flex items-center justify-between px-2 text-sm font-semibold">
+      <button
+        onClick={() => updateCart(-1)}
+        className="text-[#318616] font-bold"
+      >
+        −
+      </button>
+      <span>{quantity}</span>
+      <button
+        onClick={() => updateCart(1)}
+        className="text-[#318616] font-bold"
+      >
+        +
+      </button>
     </div>
-  )
+  )}
+</div>
+
+  );
 }
 
-export default ButtonInsideTheProductCard
+export default ButtonInsideTheProductCard;

@@ -1,59 +1,65 @@
 const { Cart } = require("../model/cart.model");
 const { Product } = require("../model/product.model");
+const { updateProduct } = require("./product.controller");
 
-const addProductToCart = async (req, res) => {
-  try {
-    const userId = req.id;
-    if (!userId) {
-      return res.status.json({
-        success: false,
-        message: "Invalid Credentials , Please login into the app first",
-      });
+
+const addProductToCart = async(req ,res) => {
+  try{
+
+    const userId = req.id; // you are getting this from middleware
+    console.log(userId)
+    if(!userId){
+      return res.status(404).json({message : "not authorized "})
     }
 
-    const { productName, quantity } = req.body;
+    const {productId , quantity} = req.body;
 
-    const productExists = await Product.findOne({ name: productName });
-
-    if (!productExists) {
-      return res.status.send("product doesnt exist");
+    if(!productId || !quantity){
+      return res.status(400).json({message : "missing products or quantity"})
     }
 
-    let cart = await Cart.findOne({ userId });
-    console.log(cart);
-    if (!cart) {
-      cart = new Cart({
-        userId,
-        items: [{ productId: productExists._id, quantity }],
-      });
-    } else {
-      const index = cart.items.findIndex(
-        (items) => items.productId.toString() === productExists._id.toString()
-      );
-      if (index > -1) {
-        cart.items[index].quantity += quantity;
-      } else {
-        cart.items.push({ productId: productExists._id, quantity });
-      }
+    const product = await Product.findById(productId);
+
+    if(!product){
+      return res.status(404).json({message : "product not found nigga"})
     }
 
-    await cart.save();
-    return res.status(201).json({
-      success: true,
-      message: "Item added to cart successfully",
-    });
-  } catch (error) {
-    return res.status(500).json({
-      error: error.message,
-      message: "error adding product to cart",
-    });
+    let cart = await Cart.findOne({userId})
+
+    if(!cart){
+      cart = new Cart({userId , items:[]})
+    }
+
+    const existingItem = cart.items.find(item => item.productId.toString() === productId)
+      
+    if(existingItem){
+      existingItem.quantity += quantity
+    }
+    else{
+      cart.items.push({productId , quantity})
+    }
+
+    await cart.save()
+    
+    res.status(200).json({
+      error : false ,
+      success : true ,
+      data : cart,
+      message : "successfully added to the cart"
+    })
+    
   }
-};
+  catch(err){
+    console.log(err)
+    res.status(400).json({
+      error : true ,
+      message : "error adding products to the cart"
+    })
+  }
+}
 
-const updateCart = async (req, res) => {
-  try {
-  } catch (error) {}
-};
+
+ 
 module.exports = {
   addProductToCart,
 };

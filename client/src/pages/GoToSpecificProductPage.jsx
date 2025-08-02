@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { data, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import { baseURL } from '@/BaseUrl';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import AddToCart from '@/components/AddToCart';
-import { useCart } from '@/context/CartContext';
+
 
 function GoToSpecificProductPage() {
   
   const [dataFromApi, setDataFromApi] = useState();
   const [selectedImage, setSelectedImage] = useState(null); // ⭐️ for main image
-  const [handleAddToCart] = useCart
 
   const { productId } = useParams();
 

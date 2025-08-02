@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { baseURL } from '@/BaseUrl';
 import toast, { Toaster } from 'react-hot-toast';
 import Header from '@/components/Header';
+import { Link } from 'react-router-dom';
 
 
 function CartPage() {

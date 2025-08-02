@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import toast , {Toaster} from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
+import { baseURL } from '@/BaseUrl'
 
 function VendorSignup() {
     const [formData , setFormData] = useState({
@@ -26,7 +27,7 @@ function VendorSignup() {
     async function handleSubmit(event){
         event.preventDefault()
         try{
-            const  res = await fetch('http://localhost:8000/api/vendor/create-vendor' , {
+            const  res = await fetch(`${baseURL}api/vendor/create-vendor` , {
                 method : "POST",
                 body : JSON.stringify(formData),
                  headers: {

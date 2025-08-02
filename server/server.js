@@ -17,7 +17,7 @@ const User = require("./model/user.model");
 const jwt = require("jsonwebtoken")
 require("dotenv").config();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: 'https://rationseva.goarya.dev',
   credentials: true
 }));
 

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
+import { baseURL } from '@/BaseUrl';
 
 function MakePayment() {
   useEffect(() => {
     async function placeOrder() {
       try {
-        const res = await fetch("http://localhost:8000/api/place-order", {
+        const res = await fetch(`${baseURL}api/place-order`, {
           method: "POST",
           credentials: "include",
           headers: {

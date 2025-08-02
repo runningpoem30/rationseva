@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { baseURL } from '@/BaseUrl'
 
 function UserVerified() {
     const {userId , token} = useParams()
@@ -16,7 +17,7 @@ function UserVerified() {
 
     async function verifyUser () {
         try{
-            const res = await fetch(`http://localhost:8000/api/user/verify/${userId}/${token}`)
+            const res = await fetch(`${baseURL}api/user/verify/${userId}/${token}`)
             const data = await res.json()
 
             if(data.success === true){
@@ -50,5 +51,4 @@ export default UserVerified
 
 
 
-// http://localhost:8000/api/user/verify/688006d6fde5d6df1b4928ab/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODgwMDZkNmZkZTVkNmRmMWI0OTI4YWIiLCJpYXQiOjE3NTMyMjA4MjMsImV4cCI6MTc1MzIyMTcyM30.aivIBqU0rH3S2au9pQbYdyadsrCR-Nn2eotn_tJTN5g
 

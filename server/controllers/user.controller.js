@@ -92,7 +92,7 @@ const loginUser = async (req, res) => {
     const cookieOption = { 
       httpOnly: true,
       secure: true,
-      sameSite: "Lax", //"none needs https" , use Lax for localhost
+      sameSite: "None", //"none needs https" , use Lax for localhost
     };
 
     res.cookie("accessToken", accessToken, cookieOption);
@@ -268,7 +268,7 @@ const refreshToken = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       secure: true,
-      sameSite: "Lax",
+      sameSite: "None",
     };
     res.cookie("accessToken", newAccessToken, cookieOptions);
 

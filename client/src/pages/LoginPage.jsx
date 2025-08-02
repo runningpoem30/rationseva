@@ -3,6 +3,7 @@ import CommonComponentLanding from '@/components/CommonComponentLanding'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast'
+import { baseURL } from '@/BaseUrl'
 
 function LoginPage() {
 
@@ -26,7 +27,7 @@ function LoginPage() {
     async function handleSubmit(event){
         event.preventDefault()
         try{
-            const fetchApi = await fetch("http://localhost:8000/api/user/login" , {
+            const fetchApi = await fetch(`${baseURL}api/user/login` , {
                 method : "POST",
                 headers : {
                     'Content-Type' : 'application/json'

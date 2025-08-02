@@ -1,6 +1,7 @@
 // components/UserSection.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { baseURL } from '@/BaseUrl';
 
 function UserSection() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -10,7 +11,7 @@ function UserSection() {
   useEffect(() => {
     async function checkLogin() {
       try {
-        const res = await fetch('http://localhost:8000/api/whoami', {
+        const res = await fetch(`${baseURL}api/whoami`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -36,7 +37,7 @@ function UserSection() {
 
   const fetchUserDetails = async () => {
     try {
-      const res = await fetch('http://localhost:8000/api/user/get-user-details', {
+      const res = await fetch(`${baseURL}api/user/get-user-details`, {
         method: 'GET',
         credentials: 'include'
       });

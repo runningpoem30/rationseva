@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import { baseURL } from '@/BaseUrl'
 
 function VendorVerified() {
     const {userId , token} = useParams()
@@ -16,7 +17,7 @@ function VendorVerified() {
 
     async function verifyUser () {
         try{
-            const res = await fetch(`http://localhost:8000/api/vendor/verify/${userId}/${token}`)
+            const res = await fetch(`${baseURL}api/vendor/verify/${userId}/${token}`)
             const data = await res.json()
 
             if(data.success === true){
